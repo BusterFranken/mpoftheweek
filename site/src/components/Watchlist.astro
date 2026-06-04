@@ -1,0 +1,31 @@
+---
+import { mepsById, viewBById, rankings } from '../lib/data';
+
+const items = rankings.weekly.watchlist
+  .map((id) => ({ mep: mepsById.get(id), row: viewBById.get(id) }))
+  .filter((x): x is { mep: NonNullable<typeof x.mep>; row: NonNullable<typeof x.row> } => Boolean(x.mep && x.row));
+---
+
+{items.length > 0 && (
+  <section class="watchlist" aria-label="Watchlist">
+    <div class="card">
+      <div class="watchlist-head">
+        <h2>Watchlist</h2>
+        <span class="note">
+          Shadow rapporteurs (≥3 files) with the fewest files matched to a declared meeting.
+          A low figure is <em>not</em> proof of wrongdoing — <a href="/methodology#caveats">why this can be misleading</a>.
+        </span>
+      </div>
+      <ul class="watchlist-items">
+        {items.map(({ mep, row }) => (
+          <li>
+            <a class="nm" href={`/mep/${mep.id}`}>{mep.name}</a>
+            <span class="st">
+              {row.files_with_related_meeting} of {row.files_shadowed} files have a meeting on record ({row.coverage_pct}%)
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}

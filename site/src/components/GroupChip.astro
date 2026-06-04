@@ -1,0 +1,11 @@
+---
+import { groupColor } from '../lib/data';
+
+interface Props {
+  group: string;
+  label?: string;
+}
+const { group, label } = Astro.props;
+---
+
+<span class="chip" style={`background:${groupColor(group)}`} title={label && label !== group ? label : undefined}>{group || '—'}</span>

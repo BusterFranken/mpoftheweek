@@ -1,0 +1,221 @@
+---
+import Base from '../../layouts/Base.astro';
+import GroupChip from '../../components/GroupChip.astro';
+import {
+  meps,
+  meta,
+  rankings,
+  viewAById,
+  viewBById,
+  meetingsByMep,
+  assignmentsByMep,
+  metProcedureKeys,
+  oeilUrl,
+  registerUrl,
+  fmtDate,
+  fmtShare,
+  REPORT_ERROR_URL,
+  type Mep,
+} from '../../lib/data';
+
+export function getStaticPaths() {
+  return meps.map((mep) => ({ params: { id: mep.id }, props: { mep } }));
+}
+
+interface Props {
+  mep: Mep;
+}
+const { mep } = Astro.props;
+
+const a = viewAById.get(mep.id);
+const b = viewBById.get(mep.id);
+const mepMeetings = [...(meetingsByMep.get(mep.id) ?? [])].sort(
+  (x, y) => y.date.localeCompare(x.date) || x.title.localeCompare(y.title),
+);
+const mepAssignments = [...(assignmentsByMep.get(mep.id) ?? [])].sort(
+  (x, y) => x.procedure_key.localeCompare(y.procedure_key) || x.role.localeCompare(y.role),
+);
+const metKeys = metProcedureKeys(mep.id);
+const bAvailable = rankings.view_b.available;
+const committeesMap = rankings.committees ?? {};
+
+const capLabel: Record<string, string> = {
+  shadow_rapporteur: 'Shadow rapporteur',
+  rapporteur: 'Rapporteur',
+  committee_chair: 'Committee chair',
+  member: 'Member',
+  other: 'Other',
+};
+const roleLabel: Record<string, string> = {
+  shadow_rapporteur: 'Shadow rapporteur (report)',
+  shadow_rapporteur_opinion: 'Shadow rapporteur (opinion)',
+};
+
+const totalA = rankings.view_a.rows.length;
+const totalB = rankings.view_b.rows.length;
+const description = `${mep.name} (${mep.group}, ${mep.country}): ${a?.meetings_total ?? 0} declared lobby meetings this term${
+  b ? `; a related meeting on record for ${b.files_with_related_meeting} of ${b.files_shadowed} shadowed files` : ''
+}. Source-linked figures from official European Parliament data.`;
+---
+
+<Base title={`${mep.name} — declared lobby meetings | MEP of the Week`} description={description}>
+  <div class="page-head">
+    <nav class="small"><a href="/">← Leaderboard</a></nav>
+    <h1>{mep.name}</h1>
+    <div class="profile-head">
+      <div class="chips">
+        <GroupChip group={mep.group} label={mep.group_label} />
+        <span class="chip outline">{mep.country}</span>
+        {mep.committees.map((code) => (
+          <span class="chip outline" title={committeesMap[code] ?? code}>{code}</span>
+        ))}
+        {mep.is_shadow_rapporteur && <span class="badge">Shadow rapporteur</span>}
+      </div>
+    </div>
+    <p class="updated">
+      Data updated {fmtDate(meta.generated_at?.slice(0, 10))} · meetings
+      {' '}{fmtDate(meta.date_range.from)} – {fmtDate(meta.date_range.to)} ·
+      <a href={mep.official_meetings_url} rel="noopener">official EP meetings page ↗</a> ·
+      <a href={mep.profile_url} rel="noopener">official EP profile ↗</a> ·
+      <a href={REPORT_ERROR_URL}>report an error</a>
+    </p>
+  </div>
+
+  <h2>Disclosure volume</h2>
+  <div class="metric-grid">
+    <div class="card">
+      <div class="v">{(a?.meetings_total ?? 0).toLocaleString('en-GB')}</div>
+      <div class="l">meetings published this term{a?.rank ? ` · rank ${a.rank} of ${totalA}` : ''}</div>
+    </div>
+    <div class="card">
+      <div class="v">{(a?.meetings_by_capacity.shadow_rapporteur ?? 0).toLocaleString('en-GB')}</div>
+      <div class="l">held as shadow rapporteur</div>
+    </div>
+    <div class="card">
+      <div class="v">{(a?.distinct_organisations ?? 0).toLocaleString('en-GB')}</div>
+      <div class="l">distinct organisations met</div>
+    </div>
+    <div class="card">
+      <div class="v">{fmtShare(a?.share_registered ?? null)}</div>
+      <div class="l">of meetings with a counterpart in the Transparency Register</div>
+    </div>
+    <div class="card">
+      <div class="v" style="font-size:1.05rem">{fmtDate(a?.first_meeting_date)} – {fmtDate(a?.last_meeting_date)}</div>
+      <div class="l">first and most recent declared meeting</div>
+    </div>
+  </div>
+
+  <h2 id="shadow-files">Shadow-rapporteur compliance</h2>
+  {!bAvailable && (
+    <p class="caveat warn">Shadow-rapporteur assignment data is currently unavailable; this section is degraded. See <a href="/methodology#view-b">methodology</a>.</p>
+  )}
+  {bAvailable && !b && (
+    <p class="muted">
+      {mep.name} currently has no shadow-rapporteur appointments on record for the
+      {' '}{meta.term_label}.
+    </p>
+  )}
+  {bAvailable && b && (
+    <>
+      <div class="metric-grid">
+        <div class="card">
+          <div class="v">{b.files_with_related_meeting} of {b.files_shadowed}</div>
+          <div class="l">shadowed files with ≥1 related meeting on record ({b.coverage_pct}%){b.rank ? ` · rank ${b.rank} of ${totalB}` : ''}</div>
+        </div>
+        <div class="card">
+          <div class="v">{b.shadow_meetings_total.toLocaleString('en-GB')}</div>
+          <div class="l">meetings declared in shadow-rapporteur capacity</div>
+        </div>
+      </div>
+      <p class="caveat warn small">
+        <strong>Lower-confidence figures.</strong> Matching is by procedure code only — meetings
+        declared without a code will not match, and a low figure may simply mean no lobby meetings
+        took place on those files.
+      </p>
+
+      <div class="table-wrap">
+        <table class="data">
+          <caption>Files shadowed by {mep.name} ({meta.term_label}) — source: <a href="https://data.europarl.europa.eu/">EP Open Data</a></caption>
+          <thead>
+            <tr>
+              <th scope="col">Procedure</th>
+              <th scope="col">Title</th>
+              <th scope="col">Committee</th>
+              <th scope="col">Role</th>
+              <th scope="col">Appointed</th>
+              <th scope="col">Related meeting on record</th>
+            </tr>
+          </thead>
+          <tbody>
+            {mepAssignments.map((as) => (
+              <tr>
+                <td class="nowrap"><a href={oeilUrl(as.procedure_code)} rel="noopener" class="mono">{as.procedure_code}</a></td>
+                <td>{as.procedure_title ?? <span class="faint">—</span>}</td>
+                <td>{as.committee ?? '—'}</td>
+                <td class="nowrap">{roleLabel[as.role] ?? as.role}</td>
+                <td class="nowrap">{fmtDate(as.appointed)}</td>
+                <td>
+                  {metKeys.has(as.procedure_key)
+                    ? <span class="status-ok">✓ yes</span>
+                    : <span class="status-none">none matched</span>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  )}
+
+  <h2 id="meetings">Declared meetings ({mepMeetings.length.toLocaleString('en-GB')})</h2>
+  <p class="muted small">
+    Every row comes from the Parliament’s
+    {' '}<a href="https://www.europarl.europa.eu/meps/en/search-meetings">official meetings search</a>;
+    verify any entry on the <a href={mep.official_meetings_url} rel="noopener">MEP’s official meetings page ↗</a>.
+  </p>
+  {mepMeetings.length === 0 ? (
+    <p class="muted">
+      No meetings published so far this term. Publication is mandatory for all MEPs since November
+      2023, but an empty list can also mean the MEP held no meetings with interest representatives.
+    </p>
+  ) : (
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Capacity</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Procedure</th>
+            <th scope="col">Organisation(s)</th>
+            <th scope="col">Register</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mepMeetings.map((m) => (
+            <tr>
+              <td class="nowrap">{fmtDate(m.date)}</td>
+              <td class="nowrap">{capLabel[m.capacity_bucket] ?? m.capacity}</td>
+              <td>{m.title}</td>
+              <td class="nowrap">
+                {m.procedure_code
+                  ? <a href={oeilUrl(m.procedure_code)} rel="noopener" class="mono">{m.procedure_code}</a>
+                  : <span class="faint">—</span>}
+              </td>
+              <td>{m.attendees || <span class="faint">—</span>}</td>
+              <td class="nowrap">
+                {m.tr_ids.length > 0
+                  ? m.tr_ids.map((id, i) => (
+                      <a href={registerUrl(id)} rel="noopener" title={`Transparency Register ${id}`}>
+                        {m.tr_ids.length > 1 ? `entry ${i + 1}` : 'registered ↗'}
+                      </a>
+                    ))
+                  : <span class="faint" title="Counterpart not found in the EU Transparency Register">not in register</span>}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+</Base>

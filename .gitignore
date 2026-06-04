@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Raw download cache (re-fetchable; keep out of git)
+pipeline/data/raw/
+
+# Node / Astro
+node_modules/
+site/dist/
+site/.astro/
+
+# OS
+.DS_Store

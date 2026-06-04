@@ -1,0 +1,78 @@
+name: Weekly data refresh
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Mondays 06:00 UTC
+  workflow_dispatch: {} # manual runs from the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    # Full fresh pull is ~60-70 min (the EP API allows 500 req / 5 min and the
+    # pipeline stays politely under it). The meetings cache below trims that.
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install pipeline dependencies
+        run: pip install -r pipeline/requirements.txt
+
+      # Past meeting windows are immutable (cached forever); restoring them
+      # avoids ~200 CSV exports per run. API caches expire by TTL anyway.
+      - name: Restore meetings raw cache
+        uses: actions/cache@v4
+        with:
+          path: pipeline/data/raw/meetings
+          key: meetings-raw-${{ github.run_id }}
+          restore-keys: |
+            meetings-raw-
+
+      - name: Run data pipeline
+        run: python -m pipeline.run
+
+      - name: Run tests
+        run: python -m pytest pipeline/tests -q
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Build site
+        working-directory: site
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy site/dist --project-name=mpoftheweek
+
+      - name: Commit refreshed data back to the repo
+        run: |
+          git config user.name "mpotw-refresh-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/src/data
+          if git diff --cached --quiet; then
+            echo "No data changes."
+          else
+            git commit -m "data: weekly refresh $(date -u +%F)"
+            git push
+          fi

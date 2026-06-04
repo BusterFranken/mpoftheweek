@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import { meta, REPORT_ERROR_URL, REPO_URL } from '../lib/data';
+---
+
+<Base title="About | MEP of the Week" description="An independent, open-source civic tool tracking how transparently MEPs disclose meetings with interest representatives.">
+  <div class="prose">
+    <div class="page-head">
+      <h1>About this project</h1>
+    </div>
+
+    <p>
+      <strong>MEP of the Week</strong> makes one narrow thing easy to see: how transparently each
+      Member of the European Parliament discloses their meetings with interest representatives, as
+      they are required to do under Article 7 of their Code of Conduct. Lobbying is a legitimate
+      part of law-making — the point of the rules, and of this site, is that citizens should be able
+      to see it happening.
+    </p>
+    <p>
+      The site is deliberately boring about it: neutral wording, no scores of character, every
+      number linked to the official European Parliament record it came from, and a
+      {' '}<a href="/methodology">methodology page</a> that lists everything that can make a figure
+      misleading. The weekly “MEP of the Week” feature highlights strong disclosure; the Watchlist
+      flags where the record is thinnest — neither is an accusation.
+    </p>
+
+    <h2>Independence</h2>
+    <p>
+      This is an independent civic project. It is <strong>not affiliated with, endorsed by, or
+      connected to the European Parliament</strong>, any political group, party, or campaign. It
+      receives no funding from any of them.
+    </p>
+
+    <h2>Data &amp; licence</h2>
+    <p>
+      All source data is © European Union /
+      {' '}<a href="https://data.europarl.europa.eu/">European Parliament</a>, reused under
+      {' '}<a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>:
+      the official <a href="https://www.europarl.europa.eu/meps/en/search-meetings">MEP meetings
+      search</a>, the EP Open Data Portal, and the
+      {' '}<a href="https://oeil.europarl.europa.eu/">Legislative Observatory</a>.
+      Organisation register links point to the
+      {' '}<a href="https://transparency-register.europa.eu/">EU Transparency Register</a>.
+      Related independent work: Transparency International EU’s
+      {' '}<a href="https://www.integritywatch.eu/mepmeetings">Integrity Watch EU</a>.
+    </p>
+
+    <h2>Open source</h2>
+    <p>
+      The data pipeline and this site are open source: <a href={REPO_URL}>{REPO_URL.replace('https://', '')}</a>.
+      The data refreshes every Monday; the current build is from {meta.generated_at?.slice(0, 10)}.
+    </p>
+
+    <h2>Corrections</h2>
+    <p>
+      Errors happen — in source data and in pipelines. If you spot one,
+      {' '}<a href={REPORT_ERROR_URL}>report it</a> or open a GitHub issue, and it will be reviewed
+      before the next weekly build. MEPs and their offices are equally welcome to get in touch.
+    </p>
+  </div>
+</Base>

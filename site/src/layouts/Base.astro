@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+import { meta, REPORT_ERROR_URL, REPO_URL, fmtDate } from '../lib/data';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'How transparently do Members of the European Parliament disclose their meetings with interest representatives? Factual, source-linked weekly rankings.' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://mpoftheweek.com');
+const updated = meta.generated_at?.slice(0, 10);
+const path = Astro.url.pathname;
+const current = (p: string) => (path === p || path === `${p}/` ? 'page' : undefined);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#1d4f9e" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">MEP of the Week<span class="tld">.</span></a>
+        <span class="tagline">Tracking how transparently MEPs disclose meetings with interest representatives</span>
+        <nav class="site-nav" aria-label="Site">
+          <a href="/" aria-current={current('/')}>Leaderboard</a>
+          <a href="/methodology" aria-current={current('/methodology')}>Methodology &amp; caveats</a>
+          <a href="/about" aria-current={current('/about')}>About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          <strong>MEP of the Week</strong> is an independent civic project. It is not affiliated with,
+          or endorsed by, the European Parliament or any political group.
+        </p>
+        <p>
+          Data: © European Union / <a href="https://data.europarl.europa.eu/">European Parliament Open Data</a> and the
+          official <a href="https://www.europarl.europa.eu/meps/en/search-meetings">MEP meetings search</a>,
+          reused under <a href="https://creativecommons.org/licenses/by/4.0/">CC&nbsp;BY&nbsp;4.0</a>.
+          Data last updated {fmtDate(updated)} · {meta.term_label}.
+        </p>
+        <p>
+          Absence of declared meetings is not evidence of wrongdoing — read the
+          <a href="/methodology">methodology &amp; caveats</a>.
+          Spotted a mistake? <a href={REPORT_ERROR_URL}>Report an error</a> ·
+          <a href={REPO_URL}>Source code</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

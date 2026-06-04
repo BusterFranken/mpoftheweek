@@ -1,0 +1,5 @@
+{
+  "featured_mep_id": null,
+  "watchlist_exclude_ids": [],
+  "notes": "Manual curation without code changes: set featured_mep_id (string EP person id) to force the MEP of the Week; add ids to watchlist_exclude_ids to keep MEPs off the Watchlist. Leave featured_mep_id null for the automatic weekly pick."
+}

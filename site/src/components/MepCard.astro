@@ -1,0 +1,55 @@
+---
+import GroupChip from './GroupChip.astro';
+import type { Feature, Mep, ViewARow, ViewBRow } from '../lib/data';
+
+interface Props {
+  view: 'a' | 'b';
+  feature: Feature;
+  mep: Mep;
+  rowA?: ViewARow;
+  rowB?: ViewBRow;
+  hidden?: boolean;
+}
+const { view, feature, mep, rowA, rowB, hidden = false } = Astro.props;
+
+const kicker =
+  feature.source === 'override'
+    ? `MEP of the Week · ${feature.week} · editor’s pick`
+    : `MEP of the Week · ${feature.week}`;
+const why =
+  view === 'a'
+    ? 'Top of the disclosure-volume leaderboard among current shadow rapporteurs this week.'
+    : 'Top of the shadow-rapporteur compliance leaderboard this week.';
+---
+
+<article class={`card feature-card${hidden ? ' is-hidden' : ''}`} id={`feature-${view}`} aria-label="MEP of the Week" hidden={hidden}>
+  <div>
+    <div class="kicker">{kicker}</div>
+    <div class="who"><a href={`/mep/${mep.id}`}>{mep.name}</a></div>
+    <div class="small">
+      <GroupChip group={mep.group} label={mep.group_label} />
+      <span class="muted"> · {mep.country}</span>
+      {mep.is_shadow_rapporteur && <span class="badge" style="margin-left:.4rem">Shadow rapporteur</span>}
+    </div>
+  </div>
+  <div class="metric">
+    {view === 'a' && rowA && (
+      <p>
+        Published <strong>{rowA.meetings_total.toLocaleString('en-GB')}</strong> meetings with interest
+        representatives this term — {rowA.meetings_by_capacity.shadow_rapporteur.toLocaleString('en-GB')} held
+        as shadow rapporteur, across {rowA.distinct_organisations.toLocaleString('en-GB')} organisations.
+      </p>
+    )}
+    {view === 'b' && rowB && (
+      <p>
+        Has a related meeting on record for <strong>{rowB.files_with_related_meeting} of {rowB.files_shadowed}</strong>{' '}
+        files shadowed ({rowB.coverage_pct}%).
+      </p>
+    )}
+    <p class="links">
+      {why}{' '}
+      <a href={`/mep/${mep.id}`}>Full profile</a> ·{' '}
+      <a href={mep.official_meetings_url} rel="noopener">Official EP source ↗</a>
+    </p>
+  </div>
+</article>

@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import { meta, fmtDate, REPORT_ERROR_URL, REPO_URL } from '../lib/data';
+
+const c = meta.counts;
+---
+
+<Base title="Methodology & caveats | MEP of the Week" description="Exactly how MEP of the Week measures lobby-meeting disclosure: data sources, metric definitions, matching rules, and every caveat that applies.">
+  <div class="prose">
+    <div class="page-head">
+      <h1>Methodology &amp; caveats</h1>
+      <p class="sub">
+        Everything on this site is computed from official European Parliament data, with the exact
+        rules below. If anything looks wrong, <a href={REPORT_ERROR_URL}>report an error</a> — the
+        full pipeline is <a href={REPO_URL}>open source</a>.
+      </p>
+    </div>
+
+    <h2 id="obligation">The disclosure obligation</h2>
+    <p>
+      Under <strong>Article 7 of the Code of Conduct for Members of the European Parliament</strong>,
+      MEPs must publish online all scheduled meetings with interest representatives falling under the
+      Transparency Register’s scope, and with representatives of public authorities of non-EU
+      countries. This obligation applied to <em>rapporteurs, shadow rapporteurs and committee
+      chairs</em> from <strong>July 2019</strong>, and was extended to <strong>all MEPs in November
+      2023</strong>. Today every MEP is covered; we highlight shadow rapporteurs because they
+      directly shape legislation and each declared meeting is tagged with the capacity it was held
+      in. There is no oversight body actively policing these declarations.
+    </p>
+    <p>
+      <strong>Scope of this site:</strong> the {meta.term_label}, i.e. meetings dated
+      {' '}{fmtDate(meta.date_range.from)} onwards. Earlier terms are out of scope.
+    </p>
+
+    <h2 id="sources">Data sources</h2>
+    <ul>
+      <li>
+        <strong>Declared meetings</strong> — the Parliament’s official
+        {' '}<a href="https://www.europarl.europa.eu/meps/en/search-meetings">Search MEP meetings</a>
+        tool (CSV export). Each record carries the MEP, date, capacity, subject, organisation(s) met,
+        an EU Transparency Register identifier when the counterpart is registered, and a legislative
+        procedure reference when the MEP supplied one. The export returns at most 1,000 rows per
+        query, so we pull the term in adaptively-bisected date windows and verify that no window was
+        truncated. Currently {c.meetings?.toLocaleString('en-GB')} meetings.
+      </li>
+      <li>
+        <strong>MEPs, groups, countries, committees</strong> — the
+        {' '}<a href="https://data.europarl.europa.eu/">European Parliament Open Data Portal</a> API
+        (CC&nbsp;BY&nbsp;4.0). Political groups are read from the API on every refresh, never
+        hardcoded. Currently {c.meps} sitting MEPs.
+      </li>
+      <li>
+        <strong>Shadow-rapporteur assignments</strong> — per-procedure participation records from the
+        same Open Data API (roles <code>RAPPORTEUR_SHADOW</code> and
+        <code>RAPPORTEUR_SHADOW_OPINION</code>, filtered to participations tagged with the 10th
+        parliamentary term). We scan all procedures registered since 2021 to catch files carried
+        over from before the term. Procedure pages on the
+        {' '}<a href="https://oeil.europarl.europa.eu/">Legislative Observatory (OEIL)</a> are the
+        human-readable reference for each file.
+      </li>
+    </ul>
+
+    <h2 id="view-a">View A — disclosure volume</h2>
+    <dl>
+      <dt>meetings_total</dt>
+      <dd>All meetings the MEP has published for the current term, any capacity.</dd>
+      <dt>by capacity</dt>
+      <dd>Split across shadow rapporteur / rapporteur / committee chair / member / other, exactly as tagged in the official record. Meetings held by the MEP’s staff fall under “other”.</dd>
+      <dt>distinct organisations</dt>
+      <dd>Unique organisation strings met (case- and accent-insensitive).</dd>
+      <dt>% registered</dt>
+      <dd>Share of meetings whose counterpart links to an EU Transparency Register entry. Not all legitimate counterparts must register (e.g. representatives of non-EU public authorities).</dd>
+    </dl>
+    <p class="caveat">
+      More published meetings means more <em>disclosure</em> — it can also reflect more lobbying
+      access. Read it as a transparency signal, not a virtue score.
+    </p>
+
+    <h2 id="view-b">View B — shadow-rapporteur compliance <span class="badge">lower confidence</span></h2>
+    <dl>
+      <dt>files_shadowed</dt>
+      <dd>Procedures where the MEP holds a term-10 shadow-rapporteur appointment (report or committee opinion).</dd>
+      <dt>files_with_related_meeting</dt>
+      <dd>How many of those files have at least one declared meeting by that MEP whose procedure reference matches — counting meetings of <em>any</em> capacity, to be fair to MEPs who tag meetings differently.</dd>
+      <dt>coverage</dt>
+      <dd>files_with_related_meeting ÷ files_shadowed, shown as “has a related meeting on record for X of Y files shadowed (Z%)”.</dd>
+    </dl>
+    <p>Ranking ties break by matched files, then shadow-capacity meetings, then name — fully deterministic.</p>
+    <div class="caveat warn">
+      <strong>Why this view is lower confidence:</strong>
+      <ul>
+        <li>Matching uses the structured procedure code only. A meeting declared as free text
+            (“CSRD implementation chat”) without a code will <em>not</em> match, undercounting the MEP.</li>
+        <li>A low or 0% figure can simply mean <em>no lobby meetings happened</em> on those files —
+            absence of declared meetings is not evidence of wrongdoing.</li>
+        <li>Assignment data follows the Parliament’s open-data records, which can lag committee decisions.</li>
+      </ul>
+    </div>
+
+    <h2 id="weekly">“MEP of the Week” &amp; Watchlist</h2>
+    <ul>
+      <li>The featured MEP is the top of the selected leaderboard among current shadow rapporteurs,
+          computed deterministically from the data and the ISO week number.</li>
+      <li>Nobody is featured twice within {meta.rules.feature_rotation_weeks} weeks (rotation); the
+          pick for a given week is frozen once published.</li>
+      <li>The Watchlist lists the bottom {meta.rules.watchlist_size} of View B, restricted to MEPs
+          shadowing at least {meta.rules.watchlist_min_files_shadowed} files so the statement is
+          meaningful and fair.</li>
+      <li>Manual overrides (a forced feature or a Watchlist exclusion) are possible via a public
+          configuration file in the repository and are labelled “editor’s pick” when used.</li>
+    </ul>
+
+    <h2 id="caveats">General caveats</h2>
+    <ul>
+      <li><strong>Absence of declared meetings is not proof of wrongdoing.</strong> An MEP may have
+          held no meetings in scope, or declared them in ways that don’t parse cleanly.</li>
+      <li>Declarations are self-reported and can be added, edited or removed retroactively; we
+          refresh weekly and re-fetch recent windows on every run.</li>
+      <li>The meetings export does not include meeting place or committee fields, so those are not
+          shown.</li>
+      <li>MEPs who joined or left mid-term are handled: only current MEPs are ranked, and meetings
+          by since-departed members are kept in the dataset but excluded from the leaderboards
+          ({c.unmatched_meeting_declarants ?? 0} such declarants currently).</li>
+      <li>A March 2022 format change affects older meeting data; it is irrelevant here because the
+          site only covers the term starting July 2024.</li>
+    </ul>
+
+    <h2 id="updates">Update cadence &amp; corrections</h2>
+    <p>
+      Data refreshes automatically every Monday morning (UTC) and the site is rebuilt from scratch;
+      “data updated” timestamps appear in the footer of every page. Generated
+      {' '}{fmtDate(meta.generated_at?.slice(0, 10))}.
+      Corrections: <a href={REPORT_ERROR_URL}>email us</a> or open an issue on
+      {' '}<a href={REPO_URL}>GitHub</a> — we aim to fix verified errors in the next weekly build.
+    </p>
+
+    <h2 id="attribution">Attribution &amp; licence</h2>
+    <p>
+      Source data © European Union / European Parliament, reused under
+      {' '}<a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.
+      This site’s own datasets and code are open source. See also Transparency International EU’s
+      {' '}<a href="https://www.integritywatch.eu/mepmeetings">Integrity Watch EU</a>, which tracks
+      the same declarations and is useful for cross-checking.
+    </p>
+  </div>
+</Base>

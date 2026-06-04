@@ -1,0 +1,125 @@
+{
+  "counts": {
+    "assignments": 0,
+    "meetings": 65032,
+    "meetings_registered": 31067,
+    "meetings_with_procedure": 11060,
+    "meps": 718,
+    "procedures_scanned": 0,
+    "shadow_rapporteurs": 397,
+    "unmatched_meeting_declarants": 14
+  },
+  "date_range": {
+    "from": "2024-07-16",
+    "to": "2026-06-04"
+  },
+  "generated_at": "2026-06-04T11:26:14+00:00",
+  "licence": "Data © European Union / European Parliament, reused under CC BY 4.0",
+  "rules": {
+    "feature_rotation_weeks": 8,
+    "watchlist_min_files_shadowed": 3,
+    "watchlist_size": 5
+  },
+  "source_urls": {
+    "meetings_export": "https://www.europarl.europa.eu/meps/en/search-meetings",
+    "oeil": "https://oeil.europarl.europa.eu",
+    "open_data_api": "https://data.europarl.europa.eu/api/v2"
+  },
+  "term": 10,
+  "term_label": "10th parliamentary term (2024–2029)",
+  "unmatched_names": [
+    {
+      "meetings": 143,
+      "mep_id": "197778",
+      "name": "BERENDSEN Tom",
+      "status": "left_term"
+    },
+    {
+      "meetings": 109,
+      "mep_id": "197422",
+      "name": "SCHNEIDER Christine",
+      "status": "left_term"
+    },
+    {
+      "meetings": 101,
+      "mep_id": "197502",
+      "name": "VEDRENNE Marie-Pierre",
+      "status": "left_term"
+    },
+    {
+      "meetings": 95,
+      "mep_id": "256927",
+      "name": "RACKETE Carola",
+      "status": "left_term"
+    },
+    {
+      "meetings": 83,
+      "mep_id": "257122",
+      "name": "DECARO Antonio",
+      "status": "left_term"
+    },
+    {
+      "meetings": 66,
+      "mep_id": "256850",
+      "name": "TUREK Filip",
+      "status": "left_term"
+    },
+    {
+      "meetings": 58,
+      "mep_id": "256863",
+      "name": "TARR Zoltán",
+      "status": "left_term"
+    },
+    {
+      "meetings": 53,
+      "mep_id": "28219",
+      "name": "CASPARY Daniel",
+      "status": "left_term"
+    },
+    {
+      "meetings": 32,
+      "mep_id": "124875",
+      "name": "VISTISEN Anders",
+      "status": "left_term"
+    },
+    {
+      "meetings": 10,
+      "mep_id": "193419",
+      "name": "HANSEN Christophe",
+      "status": "left_term"
+    },
+    {
+      "meetings": 8,
+      "mep_id": "256991",
+      "name": "STÖTELER Sebastiaan",
+      "status": "left_term"
+    },
+    {
+      "meetings": 5,
+      "mep_id": "124726",
+      "name": "VIRKKUNEN Henna",
+      "status": "left_term"
+    },
+    {
+      "meetings": 5,
+      "mep_id": "256868",
+      "name": "MAGYAR Péter",
+      "status": "left_term"
+    },
+    {
+      "meetings": 3,
+      "mep_id": "197843",
+      "name": "KUBILIUS Andrius",
+      "status": "left_term"
+    }
+  ],
+  "view_b": {
+    "available": false,
+    "reason": "skipped via --skip-assignments"
+  },
+  "warnings": {
+    "failed_procedure_ids": [],
+    "mep_detail_failures": 0,
+    "truncated_days": []
+  }
+}

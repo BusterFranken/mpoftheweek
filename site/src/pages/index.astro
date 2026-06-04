@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Board from '../components/Board.astro';
+import { meta, fmtDate } from '../lib/data';
+---
+
+<Base title="MEP of the Week — who discloses their lobby meetings?">
+  <div class="page-head">
+    <h1>Who discloses their lobby meetings?</h1>
+    <p class="sub">
+      Under Article 7 of their Code of Conduct, all Members of the European Parliament must publish
+      their scheduled meetings with interest representatives — an obligation that applied to
+      rapporteurs, shadow rapporteurs and committee chairs from July 2019 and was extended to
+      <strong>all MEPs in November 2023</strong>. This tracker ranks every current MEP on two
+      complementary views of that obligation, with every figure linked back to the official record.
+    </p>
+    <p class="updated">
+      {meta.term_label} · meetings {fmtDate(meta.date_range.from)} – {fmtDate(meta.date_range.to)} ·
+      data updated {fmtDate(meta.generated_at?.slice(0, 10))} ·
+      <a href="/methodology">methodology &amp; caveats</a>
+    </p>
+  </div>
+
+  <Board />
+</Base>

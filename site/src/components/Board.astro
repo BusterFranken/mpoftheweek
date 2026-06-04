@@ -1,0 +1,476 @@
+---
+import MepCard from './MepCard.astro';
+import Watchlist from './Watchlist.astro';
+import {
+  meps,
+  rankings,
+  mepsById,
+  viewAById,
+  viewBById,
+  groupColor,
+  fmtShare,
+} from '../lib/data';
+
+// ---- Client payload: one compact row per current MEP -------------------------
+const rows = meps.map((m) => {
+  const a = viewAById.get(m.id);
+  const b = viewBById.get(m.id);
+  return {
+    id: m.id,
+    name: m.name,
+    sort: m.sort_name,
+    group: m.group,
+    glabel: m.group_label,
+    gcolor: groupColor(m.group),
+    country: m.country,
+    cc: m.country_code,
+    coms: m.committees,
+    shadow: m.is_shadow_rapporteur,
+    src: m.official_meetings_url,
+    a: a
+      ? {
+          rank: a.rank,
+          total: a.meetings_total,
+          sr: a.meetings_by_capacity.shadow_rapporteur,
+          orgs: a.distinct_organisations,
+          reg: a.share_registered,
+        }
+      : { rank: 9999, total: 0, sr: 0, orgs: 0, reg: null },
+    b: b
+      ? {
+          rank: b.rank,
+          fs: b.files_shadowed,
+          fm: b.files_with_related_meeting,
+          cov: b.coverage_pct,
+          sm: b.shadow_meetings_total,
+        }
+      : null,
+  };
+});
+
+const payload = JSON.stringify(rows).replace(/</g, '\\u003c');
+
+// ---- Facets --------------------------------------------------------------------
+const groups = [...new Set(meps.map((m) => m.group).filter(Boolean))].sort();
+const countries = [...new Map(meps.map((m) => [m.country_code, m.country])).entries()].sort((x, y) =>
+  x[1].localeCompare(y[1]),
+);
+const committees = Object.entries(rankings.committees ?? {}).sort((x, y) => x[0].localeCompare(y[0]));
+
+// ---- Weekly picks ---------------------------------------------------------------
+const bAvailable = rankings.view_b.available && rankings.view_b.rows.length > 0;
+const featA = rankings.weekly.feature_a;
+const featB = rankings.weekly.feature_b;
+const featAMep = featA ? mepsById.get(featA.mep_id) : undefined;
+const featBMep = featB ? mepsById.get(featB.mep_id) : undefined;
+
+// ---- Initial server-rendered table (View A, official rank order) ----------------
+const initial = [...rows].sort((x, y) => x.a.rank - y.a.rank);
+---
+
+<section aria-label="Leaderboard views" class="board-section">
+  <div class="view-toggle" role="group" aria-label="Switch leaderboard view">
+    <button type="button" id="btn-view-a" aria-pressed="true">Disclosure volume</button>
+    <button
+      type="button"
+      id="btn-view-b"
+      aria-pressed="false"
+      disabled={!bAvailable}
+      title={bAvailable ? undefined : 'Shadow-rapporteur data is currently unavailable'}
+    >
+      Shadow-rapporteur compliance
+    </button>
+  </div>
+
+  <div style="margin-top:1rem">
+    {featAMep && featA && (
+      <MepCard view="a" feature={featA} mep={featAMep} rowA={viewAById.get(featAMep.id)} />
+    )}
+    {bAvailable && featBMep && featB && (
+      <MepCard view="b" feature={featB} mep={featBMep} rowB={viewBById.get(featBMep.id)} hidden />
+    )}
+  </div>
+
+  {bAvailable && <Watchlist />}
+
+  <div class="caveat" id="caveat-a">
+    More published meetings means more <em>disclosure</em> — which can also reflect more lobbying
+    access. Treat this as a transparency signal, not a virtue score. Counts cover
+    {' '}declared meetings since the term began; every figure links to the official EP record.
+  </div>
+  <div class="caveat warn" id="caveat-b" hidden>
+    <strong>Lower-confidence view.</strong> Files and meetings are matched by procedure code only:
+    meetings declared as free text without a code will not match, and a low or 0% figure can simply
+    mean no lobby meetings took place on those files. Details in the
+    {' '}<a href="/methodology#view-b">methodology</a>.
+  </div>
+
+  <div class="controls">
+    <label class="visually-hidden" for="board-q">Search MEPs by name</label>
+    <input type="search" id="board-q" placeholder="Search by MEP name, country or group…" autocomplete="off" />
+
+    <details class="ms" id="ms-group">
+      <summary>Group <span class="ms-count"></span></summary>
+      <div class="ms-panel">
+        {groups.map((g) => (
+          <label><input type="checkbox" name="group" value={g} /> {g}</label>
+        ))}
+      </div>
+    </details>
+
+    <details class="ms" id="ms-country">
+      <summary>Country <span class="ms-count"></span></summary>
+      <div class="ms-panel">
+        {countries.map(([code, name]) => (
+          <label><input type="checkbox" name="country" value={code} /> {name}</label>
+        ))}
+      </div>
+    </details>
+
+    <details class="ms" id="ms-committee">
+      <summary>Committee <span class="ms-count"></span></summary>
+      <div class="ms-panel">
+        <span class="hint">Matches MEPs sitting on a selected committee.</span>
+        {committees.map(([code, name]) => (
+          <label><input type="checkbox" name="committee" value={code} /> <strong>{code}</strong>&nbsp;{name}</label>
+        ))}
+      </div>
+    </details>
+
+    <button type="button" class="btn" id="btn-dir" aria-pressed="false" title="Flip ranking order">
+      Best → worst
+    </button>
+    <button type="button" class="btn" id="btn-reset">Reset</button>
+  </div>
+
+  <p class="board-meta" id="board-count" role="status" aria-live="polite"></p>
+
+  <div class="table-wrap">
+    <table class="board" id="board-table">
+      <caption id="board-caption">
+        Disclosure volume — declared meetings with interest representatives, current term.
+      </caption>
+      <thead id="board-head">
+        <tr>
+          <th scope="col" class="num">#</th>
+          <th scope="col" class="sortable" data-sort="name">MEP</th>
+          <th scope="col">Group</th>
+          <th scope="col">Country</th>
+          <th scope="col" class="num sortable" data-sort="total" aria-sort="descending">Meetings</th>
+          <th scope="col" class="num sortable" data-sort="sr">As shadow rapp.</th>
+          <th scope="col" class="num sortable" data-sort="orgs">Organisations</th>
+          <th scope="col" class="num sortable" data-sort="reg">% registered</th>
+          <th scope="col">Source</th>
+        </tr>
+      </thead>
+      <tbody id="board-body">
+        {initial.map((r) => (
+          <tr>
+            <td class="rank">{r.a.rank}</td>
+            <td class="mep-name">
+              <a href={`/mep/${r.id}`}>{r.name}</a>
+              {r.shadow && <span class="badge" title="Currently a shadow rapporteur on at least one file">S</span>}
+            </td>
+            <td><span class="chip" style={`background:${r.gcolor}`} title={r.glabel}>{r.group}</span></td>
+            <td class="country">{r.country}</td>
+            <td class="num"><strong>{r.a.total.toLocaleString('en-GB')}</strong></td>
+            <td class="num">{r.a.sr.toLocaleString('en-GB')}</td>
+            <td class="num">{r.a.orgs.toLocaleString('en-GB')}</td>
+            <td class="num">{fmtShare(r.a.reg)}</td>
+            <td class="src-link"><a href={r.src} rel="noopener">EP record ↗</a></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <script type="application/json" id="board-data" set:html={payload} />
+</section>
+
+<script>
+  type RowA = { rank: number; total: number; sr: number; orgs: number; reg: number | null };
+  type RowB = { rank: number; fs: number; fm: number; cov: number; sm: number } | null;
+  type Row = {
+    id: string; name: string; sort: string; group: string; glabel: string; gcolor: string;
+    country: string; cc: string; coms: string[]; shadow: boolean; src: string; a: RowA; b: RowB;
+  };
+
+  const DATA: Row[] = JSON.parse(document.getElementById('board-data')!.textContent || '[]');
+  const B_AVAILABLE = !(document.getElementById('btn-view-b') as HTMLButtonElement).disabled;
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const body = $('board-body');
+  const head = $('board-head');
+  const caption = $('board-caption');
+  const countEl = $('board-count');
+
+  type View = 'a' | 'b';
+  interface State {
+    view: View; q: string; dir: 'best' | 'worst'; sort: string;
+    groups: Set<string>; countries: Set<string>; committees: Set<string>;
+  }
+
+  const fold = (s: string) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const esc = (s: string) =>
+    s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+  const num = (n: number) => n.toLocaleString('en-GB');
+  const share = (x: number | null) => (x == null ? '—' : `${Math.round(x * 100)}%`);
+
+  // ---- URL state ------------------------------------------------------------
+  function readState(): State {
+    const p = new URLSearchParams(location.search);
+    const view: View = p.get('view') === 'b' && B_AVAILABLE ? 'b' : 'a';
+    const setOf = (k: string) => new Set((p.get(k) || '').split(',').filter(Boolean));
+    return {
+      view,
+      q: p.get('q') || '',
+      dir: p.get('dir') === 'worst' ? 'worst' : 'best',
+      sort: p.get('sort') || 'default',
+      groups: setOf('groups'),
+      countries: setOf('countries'),
+      committees: setOf('committees'),
+    };
+  }
+
+  function writeState(s: State) {
+    const p = new URLSearchParams();
+    if (s.view !== 'a') p.set('view', s.view);
+    if (s.q) p.set('q', s.q);
+    if (s.dir !== 'best') p.set('dir', s.dir);
+    if (s.sort !== 'default') p.set('sort', s.sort);
+    if (s.groups.size) p.set('groups', [...s.groups].join(','));
+    if (s.countries.size) p.set('countries', [...s.countries].join(','));
+    if (s.committees.size) p.set('committees', [...s.committees].join(','));
+    const qs = p.toString();
+    history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+  }
+
+  const state = readState();
+
+  // ---- Columns -----------------------------------------------------------------
+  type Col = { sort: string; get: (r: Row) => number | string | null };
+  const COLS: Record<View, Col[]> = {
+    a: [
+      { sort: 'name', get: (r) => r.sort },
+      { sort: 'total', get: (r) => r.a.total },
+      { sort: 'sr', get: (r) => r.a.sr },
+      { sort: 'orgs', get: (r) => r.a.orgs },
+      { sort: 'reg', get: (r) => r.a.reg },
+    ],
+    b: [
+      { sort: 'name', get: (r) => r.sort },
+      { sort: 'cov', get: (r) => (r.b ? r.b.cov : null) },
+      { sort: 'fs', get: (r) => (r.b ? r.b.fs : null) },
+      { sort: 'fm', get: (r) => (r.b ? r.b.fm : null) },
+      { sort: 'sm', get: (r) => (r.b ? r.b.sm : null) },
+    ],
+  };
+
+  const HEADERS: Record<View, string> = {
+    a: `
+      <tr>
+        <th scope="col" class="num">#</th>
+        <th scope="col" class="sortable" data-sort="name">MEP</th>
+        <th scope="col">Group</th>
+        <th scope="col">Country</th>
+        <th scope="col" class="num sortable" data-sort="total">Meetings</th>
+        <th scope="col" class="num sortable" data-sort="sr">As shadow rapp.</th>
+        <th scope="col" class="num sortable" data-sort="orgs">Organisations</th>
+        <th scope="col" class="num sortable" data-sort="reg">% registered</th>
+        <th scope="col">Source</th>
+      </tr>`,
+    b: `
+      <tr>
+        <th scope="col" class="num">#</th>
+        <th scope="col" class="sortable" data-sort="name">MEP</th>
+        <th scope="col">Group</th>
+        <th scope="col">Country</th>
+        <th scope="col" class="sortable" data-sort="cov">Files with a meeting on record</th>
+        <th scope="col" class="num sortable" data-sort="fs">Files shadowed</th>
+        <th scope="col" class="num sortable" data-sort="sm">Shadow-capacity meetings</th>
+        <th scope="col">Source</th>
+      </tr>`,
+  };
+
+  const CAPTIONS: Record<View, string> = {
+    a: 'Disclosure volume — declared meetings with interest representatives, current term.',
+    b: 'Shadow-rapporteur compliance — shadowed files with at least one related meeting on record (lower confidence).',
+  };
+
+  // ---- Render ---------------------------------------------------------------------
+  function rowsForView(): Row[] {
+    return state.view === 'b' ? DATA.filter((r) => r.b) : DATA;
+  }
+
+  function applyFilters(rows: Row[]): Row[] {
+    const q = fold(state.q.trim());
+    return rows.filter((r) => {
+      if (state.groups.size && !state.groups.has(r.group)) return false;
+      if (state.countries.size && !state.countries.has(r.cc)) return false;
+      if (state.committees.size && !r.coms.some((c) => state.committees.has(c))) return false;
+      if (q && !(fold(r.name).includes(q) || fold(r.country).includes(q) || fold(r.group).includes(q)))
+        return false;
+      return true;
+    });
+  }
+
+  function comparator(): (x: Row, y: Row) => number {
+    const view = state.view;
+    const tie = (x: Row, y: Row) => x.sort.localeCompare(y.sort) || x.id.localeCompare(y.id);
+    if (state.sort === 'default') {
+      return (x, y) => (view === 'b' ? x.b!.rank - y.b!.rank : x.a.rank - y.a.rank);
+    }
+    const col = COLS[view].find((c) => c.sort === state.sort);
+    if (!col) return (x, y) => tie(x, y);
+    return (x, y) => {
+      const vx = col.get(x);
+      const vy = col.get(y);
+      if (typeof vx === 'string' || typeof vy === 'string') {
+        return String(vx).localeCompare(String(vy)) || tie(x, y);
+      }
+      if (vx == null && vy == null) return tie(x, y);
+      if (vx == null) return 1; // nulls always last in "best" order
+      if (vy == null) return -1;
+      return vy - vx || tie(x, y); // numeric: high = best
+    };
+  }
+
+  function renderRow(r: Row): string {
+    const name = `
+      <td class="rank">${state.view === 'b' ? r.b!.rank : r.a.rank}</td>
+      <td class="mep-name"><a href="/mep/${r.id}">${esc(r.name)}</a>${
+        r.shadow ? ' <span class="badge" title="Currently a shadow rapporteur on at least one file">S</span>' : ''
+      }</td>
+      <td><span class="chip" style="background:${r.gcolor}" title="${esc(r.glabel)}">${esc(r.group)}</span></td>
+      <td class="country">${esc(r.country)}</td>`;
+    const source = `<td class="src-link"><a href="${esc(r.src)}" rel="noopener">EP record ↗</a></td>`;
+    if (state.view === 'b') {
+      const b = r.b!;
+      return `<tr>${name}
+        <td class="nowrap"><span class="bar" aria-hidden="true"><i style="width:${Math.max(0, Math.min(100, b.cov))}%"></i></span><strong>${b.fm} of ${b.fs}</strong> <span class="muted">(${b.cov}%)</span></td>
+        <td class="num">${num(b.fs)}</td>
+        <td class="num">${num(b.sm)}</td>
+        ${source}</tr>`;
+    }
+    return `<tr>${name}
+      <td class="num"><strong>${num(r.a.total)}</strong></td>
+      <td class="num">${num(r.a.sr)}</td>
+      <td class="num">${num(r.a.orgs)}</td>
+      <td class="num">${share(r.a.reg)}</td>
+      ${source}</tr>`;
+  }
+
+  function render() {
+    const all = rowsForView();
+    const filtered = applyFilters(all).sort(comparator());
+    if (state.dir === 'worst') filtered.reverse();
+    body.innerHTML = filtered.map(renderRow).join('');
+    head.innerHTML = HEADERS[state.view];
+    caption.textContent = CAPTIONS[state.view];
+    countEl.textContent =
+      `Showing ${filtered.length} of ${all.length} ` +
+      (state.view === 'b' ? 'shadow rapporteurs' : 'MEPs') +
+      (state.dir === 'worst' ? ' — worst to best' : ' — best to worst');
+
+    // sort indicators
+    head.querySelectorAll('th.sortable').forEach((th) => {
+      const key = (th as HTMLElement).dataset.sort!;
+      const active = key === state.sort || (state.sort === 'default' && (key === 'total' || key === 'cov'));
+      if (!active) th.removeAttribute('aria-sort');
+      else th.setAttribute('aria-sort', state.dir === 'worst' ? 'ascending' : 'descending');
+    });
+
+    // view-dependent chrome
+    $('btn-view-a').setAttribute('aria-pressed', String(state.view === 'a'));
+    $('btn-view-b').setAttribute('aria-pressed', String(state.view === 'b'));
+    const fa = document.getElementById('feature-a');
+    const fb = document.getElementById('feature-b');
+    if (fa) fa.hidden = state.view !== 'a';
+    if (fb) fb.hidden = state.view !== 'b';
+    $('caveat-a').hidden = state.view !== 'a';
+    $('caveat-b').hidden = state.view !== 'b';
+    ($('btn-dir') as HTMLButtonElement).textContent = state.dir === 'best' ? 'Best → worst' : 'Worst → best';
+    $('btn-dir').setAttribute('aria-pressed', String(state.dir === 'worst'));
+
+    for (const [id, set] of [
+      ['ms-group', state.groups],
+      ['ms-country', state.countries],
+      ['ms-committee', state.committees],
+    ] as const) {
+      const el = $(id).querySelector('.ms-count')!;
+      el.textContent = set.size ? `(${set.size})` : '';
+    }
+    writeState(state);
+  }
+
+  // ---- Events -------------------------------------------------------------------------
+  $('btn-view-a').addEventListener('click', () => { state.view = 'a'; state.sort = 'default'; render(); });
+  $('btn-view-b').addEventListener('click', () => {
+    if (B_AVAILABLE) { state.view = 'b'; state.sort = 'default'; render(); }
+  });
+  $('btn-dir').addEventListener('click', () => {
+    state.dir = state.dir === 'best' ? 'worst' : 'best';
+    render();
+  });
+  $('btn-reset').addEventListener('click', () => {
+    state.q = ''; state.groups.clear(); state.countries.clear(); state.committees.clear();
+    state.sort = 'default'; state.dir = 'best';
+    ($('board-q') as HTMLInputElement).value = '';
+    document.querySelectorAll<HTMLInputElement>('.ms-panel input').forEach((i) => (i.checked = false));
+    render();
+  });
+
+  let qTimer: ReturnType<typeof setTimeout>;
+  $('board-q').addEventListener('input', (e) => {
+    clearTimeout(qTimer);
+    qTimer = setTimeout(() => {
+      state.q = (e.target as HTMLInputElement).value;
+      render();
+    }, 120);
+  });
+
+  for (const [id, key] of [
+    ['ms-group', 'groups'],
+    ['ms-country', 'countries'],
+    ['ms-committee', 'committees'],
+  ] as const) {
+    $(id).addEventListener('change', (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.type !== 'checkbox') return;
+      const set = state[key];
+      if (input.checked) set.add(input.value);
+      else set.delete(input.value);
+      render();
+    });
+  }
+
+  head.addEventListener('click', (e) => {
+    const th = (e.target as HTMLElement).closest('th.sortable') as HTMLElement | null;
+    if (!th) return;
+    const key = th.dataset.sort!;
+    if (state.sort === key) state.dir = state.dir === 'best' ? 'worst' : 'best';
+    else { state.sort = key; state.dir = 'best'; }
+    render();
+  });
+
+  // close multiselects on outside click
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll<HTMLDetailsElement>('details.ms[open]').forEach((d) => {
+      if (!d.contains(e.target as Node)) d.open = false;
+    });
+  });
+
+  // ---- Initial paint: restore URL state (checkboxes + search box) ---------------------
+  ($('board-q') as HTMLInputElement).value = state.q;
+  for (const [name, set] of [
+    ['group', state.groups],
+    ['country', state.countries],
+    ['committee', state.committees],
+  ] as const) {
+    document
+      .querySelectorAll<HTMLInputElement>(`.ms-panel input[name="${name}"]`)
+      .forEach((i) => (i.checked = set.has(i.value)));
+  }
+  render();
+</script>
+
