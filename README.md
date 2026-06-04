@@ -48,14 +48,18 @@ prebuilt JSON, state lives in URL query params.
    ⚠️ The API intermittently returns **HTTP 200 with an `{"error": …}` body** under load;
    `net.py` detects and retries this. Rate limit 500 req/5 min — the pipeline throttles to
    ~0.7 s between calls.
-3. **Shadow-rapporteur assignments** — `/procedures?year=YYYY` + `/procedures/{id}`:
-   `had_participation[]` entries with `participation_role` `RAPPORTEUR_SHADOW` /
-   `RAPPORTEUR_SHADOW_OPINION` carry the person id, political group, appointment date and —
-   crucially — `parliamentary_term: "org/ep-10"`, which scopes assignments to the current
-   term even on files carried over from earlier years. Years 2021→present are scanned
-   (configurable in `config.py`). OEIL procedure pages and Parltrack dumps remain documented
-   fallbacks; the official API proved to cover the full denominator, so they are unused.
-   This source is **decoupled**: if it fails, the site degrades gracefully to View A only.
+3. **Shadow-rapporteur assignments** — the unfiltered `/procedures` registry (paginated,
+   ends with HTTP 204) + `/procedures/{id}`: `had_participation[]` entries with
+   `participation_role` `RAPPORTEUR_SHADOW` / `RAPPORTEUR_SHADOW_OPINION` carry the person
+   id, political group, appointment date and — crucially — `parliamentary_term: "org/ep-10"`,
+   which scopes assignments to the current term even on files carried over from earlier years.
+   ⚠️ The `/procedures?year=` filter **silently drops records** (measured June 2026:
+   `year=2026` returned 114 of 298 real procedures; live files like `2023/0448(COD)` were
+   missing) — never use it. The pipeline scans every registry id registered 2021→present
+   (configurable) **plus** any procedure key referenced by a declared meeting, whatever its
+   year. OEIL procedure pages and Parltrack dumps remain documented fallbacks; the official
+   API proved to cover the full denominator, so they are unused. This source is
+   **decoupled**: if it fails, the site degrades gracefully to View A only.
 
 Raw responses are cached under `pipeline/data/raw/` (gitignored) so re-runs are debuggable
 and offline-friendly. `--no-cache` forces refetching; recent meeting windows auto-expire.

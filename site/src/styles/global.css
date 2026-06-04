@@ -23,6 +23,9 @@
 
 * { box-sizing: border-box; }
 
+/* The hidden attribute must always win, even over display:flex components. */
+[hidden] { display: none !important; }
+
 html {
   background: var(--paper);
   color: var(--ink);

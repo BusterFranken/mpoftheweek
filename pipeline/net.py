@@ -34,6 +34,10 @@ class FetchError(RuntimeError):
     """A request failed permanently (all retries exhausted)."""
 
 
+class NotFound(FetchError):
+    """The resource does not exist (HTTP 404/410) - never retried."""
+
+
 class TransientApiError(RuntimeError):
     """A retryable failure (5xx/429, or the EP API's 200-with-error-body)."""
 
@@ -105,6 +109,8 @@ def get(
             resp = _session.get(url, params=params, timeout=config.TIMEOUT)
             if resp.status_code in (429, 500, 502, 503, 504):
                 raise TransientApiError(f"HTTP {resp.status_code}")
+            if resp.status_code in (404, 410):
+                raise NotFound(f"HTTP {resp.status_code} for {url}")
             resp.raise_for_status()
             if not resp.encoding:
                 resp.encoding = "utf-8"
@@ -139,4 +145,7 @@ def get_api_json(
     body = get(
         f"{config.EP_API_BASE}{path}", params=query, cache_path=cache_path, ttl=ttl
     )
+    if not body.strip():
+        # The API answers HTTP 204 with an empty body past the end of a listing.
+        return {"data": []}
     return json.loads(body)

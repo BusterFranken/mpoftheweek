@@ -1,11 +1,18 @@
 """Shadow-rapporteur assignments for the current term, from the EP Open Data API.
 
-Strategy (verified live): /procedures?year=YYYY lists process ids;
-/procedures/{id} exposes `had_participation`, where personal participations
-carry `participation_role` (def/ep-roles/RAPPORTEUR_SHADOW or
-RAPPORTEUR_SHADOW_OPINION), the person id, the political group, an appointment
-date - and crucially `parliamentary_term` ("org/ep-10"), which scopes the
-assignment to the current term even on files carried over from earlier years.
+Strategy (verified live): the UNFILTERED /procedures registry enumerates
+process ids (paginated; ends with HTTP 204). The `year=` query filter is NOT
+used because it silently drops records - measured June 2026: year=2026
+returned 114 of 298 actual procedures, and live files such as 2023/0448(COD)
+were missing entirely. /procedures/{id} exposes `had_participation`, where
+personal participations carry `participation_role`
+(def/ep-roles/RAPPORTEUR_SHADOW or RAPPORTEUR_SHADOW_OPINION), the person id,
+the political group, an appointment date - and crucially `parliamentary_term`
+("org/ep-10"), which scopes the assignment to the current term even on files
+carried over from earlier years.
+
+Procedure keys referenced by declared meetings (any year) are merged into the
+scan set, so older carry-overs that MEPs demonstrably work on are never missed.
 
 This module is deliberately decoupled: ``pipeline.run`` treats any hard
 failure here as "View B unavailable" and the site degrades to View A only.
@@ -15,7 +22,7 @@ README, but the official API covers the full denominator.)
 from __future__ import annotations
 
 import logging
-from datetime import date, timedelta
+from datetime import timedelta
 
 from . import config, net, normalize
 
@@ -35,24 +42,38 @@ LEAD_ROLE = "def/ep-roles/COMMITTEE_LEAD"
 MAX_FAILURE_SHARE = 0.05
 
 
-def _year_list(year: int) -> list[dict]:
-    """All procedures registered in `year` (paginated defensively)."""
-    ttl = timedelta(days=config.PROCEDURE_LIST_CURRENT_YEAR_TTL_DAYS) if year == date.today().year else None
-    procedures: list[dict] = []
+def _registry_ids() -> list[str]:
+    """Every process id in the full /procedures registry (no year filter).
+
+    The registry is ordered by process id and currently ~23k records; pages
+    are cached briefly so a weekly refresh re-reads them. Pagination stops
+    only on an EMPTY page (HTTP 204): the API has been observed returning
+    slightly short pages mid-listing, so `len < limit` is NOT a reliable
+    end-of-data signal.
+    """
+    ttl = timedelta(days=config.PROCEDURE_LIST_CURRENT_YEAR_TTL_DAYS)
+    ids: list[str] = []
     offset = 0
-    while True:
-        suffix = f"_offset{offset}" if offset else ""
+    max_pages = 50  # backstop: 100k records is far beyond any plausible registry size
+    for _ in range(max_pages):
         page = net.get_api_json(
             "/procedures",
-            params={"year": year, "limit": LIST_LIMIT, "offset": offset},
-            cache_path=RAW_PROC_DIR / f"list_{year}{suffix}.json",
+            params={"limit": LIST_LIMIT, "offset": offset},
+            cache_path=RAW_PROC_DIR / f"registry_offset{offset:06d}.json",
             ttl=ttl,
         )
         data = page.get("data") or []
-        procedures.extend(data)
-        if len(data) < LIST_LIMIT:
-            return procedures
+        if not data:
+            return sorted(set(ids))
+        ids.extend(p["process_id"] for p in data if p.get("process_id"))
         offset += LIST_LIMIT
+    log.warning("registry pagination hit the %d-page backstop", max_pages)
+    return sorted(set(ids))
+
+
+def _in_scope(process_id: str, years: list[int]) -> bool:
+    year, _, serial = (process_id or "").partition("-")
+    return year.isdigit() and serial != "" and int(year) in years
 
 
 def _procedure_detail(process_id: str) -> dict | None:
@@ -65,19 +86,39 @@ def _procedure_detail(process_id: str) -> dict | None:
     return data[0] if data else None
 
 
-def _tail(ref: str | None) -> str | None:
-    return ref.rsplit("/", 1)[-1] if ref else None
+def _tail(ref) -> str | None:
+    """Last path segment of an API reference.
+
+    JSON-LD multi-valued fields may hand us a list (e.g. a reclassified
+    procedure with two process_type values) - use the first string.
+    """
+    if isinstance(ref, list):
+        ref = next((x for x in ref if isinstance(x, str)), None)
+    if not isinstance(ref, str) or not ref:
+        return None
+    return ref.rsplit("/", 1)[-1]
+
+
+def _as_list(value) -> list:
+    """JSON-LD compacts single-element arrays to a bare value; undo that."""
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return value
+    return [value]
 
 
 def _extract_assignments(proc: dict) -> list[dict]:
-    participations = proc.get("had_participation") or []
+    # Participations may arrive as a list of objects, a single object, or
+    # (defensively) bare id strings - keep only the expanded objects.
+    participations = [p for p in _as_list(proc.get("had_participation")) if isinstance(p, dict)]
     lead_committees = sorted(
         {
             _tail(org)
             for p in participations
             if p.get("participation_role") == LEAD_ROLE
-            for org in (p.get("had_participant_organization") or [])
-            if org
+            for org in _as_list(p.get("had_participant_organization"))
+            if isinstance(org, str)
         }
     )
     process_id = proc.get("process_id") or _tail(proc.get("id")) or ""
@@ -93,31 +134,34 @@ def _extract_assignments(proc: dict) -> list[dict]:
 
     rows: list[dict] = []
     for p in participations:
-        role = ROLE_MAP.get(p.get("participation_role") or "")
-        if role is None:
-            continue
         if p.get("parliamentary_term") != config.TERM_ORG_ID:
             continue
-        persons = p.get("had_participant_person") or []
+        # A participation can carry several roles at once (e.g. shadow for the
+        # report AND for an opinion) - emit one assignment row per mapped role.
+        roles = [ROLE_MAP[r] for r in _as_list(p.get("participation_role")) if r in ROLE_MAP]
+        if not roles:
+            continue
+        persons = [x for x in _as_list(p.get("had_participant_person")) if isinstance(x, str)]
         mep_id = _tail(persons[0]) if persons else None
         if not mep_id:
             continue
         committee = _tail(p.get("participation_in_name_of"))
         if not committee:
             committee = "+".join(c for c in lead_committees if c) or None
-        rows.append(
-            {
-                "procedure_key": process_id,
-                "procedure_code": display,
-                "procedure_title": title,
-                "procedure_type": proc_type,
-                "committee": committee,
-                "mep_id": mep_id,
-                "role": role,
-                "group_at_appointment": _tail(p.get("politicalGroup")),
-                "appointed": p.get("activity_date"),
-            }
-        )
+        for role in roles:
+            rows.append(
+                {
+                    "procedure_key": process_id,
+                    "procedure_code": display,
+                    "procedure_title": title,
+                    "procedure_type": proc_type,
+                    "committee": committee,
+                    "mep_id": mep_id,
+                    "role": role,
+                    "group_at_appointment": _tail(p.get("politicalGroup")),
+                    "appointed": p.get("activity_date"),
+                }
+            )
     return rows
 
 
@@ -135,22 +179,38 @@ def dedupe_assignments(rows: list[dict]) -> list[dict]:
     )
 
 
-def fetch_assignments(years: list[int] | None = None) -> tuple[list[dict], dict]:
-    """Returns (assignment_records, stats). Raises net.FetchError on hard failure."""
-    years = years or config.ASSIGNMENT_SCAN_YEARS
-    process_ids: list[str] = []
-    for year in years:
-        listed = _year_list(year)
-        process_ids.extend(p.get("process_id") for p in listed if p.get("process_id"))
-        log.info("year %d: %d procedures listed", year, len(listed))
+def fetch_assignments(
+    years: list[int] | None = None,
+    extra_keys: set[str] | None = None,
+) -> tuple[list[dict], dict]:
+    """Returns (assignment_records, stats). Raises net.FetchError on hard failure.
 
-    process_ids = sorted(set(process_ids))
+    `extra_keys` are procedure keys (YYYY-NNNN) observed elsewhere (declared
+    meetings) that must be scanned regardless of their registration year.
+    """
+    years = years or config.ASSIGNMENT_SCAN_YEARS
+    registry = _registry_ids()
+    log.info("procedure registry: %d ids total", len(registry))
+    in_scope = {pid for pid in registry if _in_scope(pid, years)}
+    extras = {
+        key for key in (extra_keys or set()) if normalize.PROC_KEY_RE.match(key)
+    } - in_scope
+    process_ids = sorted(in_scope | extras)
+    log.info(
+        "scanning %d procedures (%d registered %s-%s, %d extra via meeting references)",
+        len(process_ids), len(in_scope), years[0], years[-1], len(extras),
+    )
     assignments: list[dict] = []
     procedures_with_shadows = 0
     failed_ids: list[str] = []
+    not_found_ids: list[str] = []
     for index, process_id in enumerate(process_ids, 1):
         try:
             proc = _procedure_detail(process_id)
+        except net.NotFound:
+            # Meeting-referenced ids can be typos in the source declarations.
+            not_found_ids.append(process_id)
+            continue
         except net.FetchError as exc:
             log.warning("procedure %s unavailable: %s", process_id, exc)
             failed_ids.append(process_id)
@@ -174,11 +234,14 @@ def fetch_assignments(years: list[int] | None = None) -> tuple[list[dict], dict]
 
     stats = {
         "years_scanned": years,
+        "registry_total": len(registry),
+        "extra_keys_scanned": len(extras),
         "procedures_scanned": len(process_ids),
         "procedures_with_term10_shadows": procedures_with_shadows,
         "assignments": len(deduped),
         "shadow_meps": len({r["mep_id"] for r in deduped}),
         "failed_procedure_ids": failed_ids,
+        "not_found_ids": not_found_ids,
     }
     return deduped, stats
 

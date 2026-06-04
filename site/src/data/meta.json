@@ -1,19 +1,19 @@
 {
   "counts": {
-    "assignments": 0,
+    "assignments": 5585,
     "meetings": 65032,
     "meetings_registered": 31067,
     "meetings_with_procedure": 11060,
     "meps": 718,
-    "procedures_scanned": 0,
-    "shadow_rapporteurs": 397,
+    "procedures_scanned": 4568,
+    "shadow_rapporteurs": 628,
     "unmatched_meeting_declarants": 14
   },
   "date_range": {
     "from": "2024-07-16",
     "to": "2026-06-04"
   },
-  "generated_at": "2026-06-04T11:26:14+00:00",
+  "generated_at": "2026-06-04T12:42:03+00:00",
   "licence": "Data © European Union / European Parliament, reused under CC BY 4.0",
   "rules": {
     "feature_rotation_weeks": 8,
@@ -114,8 +114,8 @@
     }
   ],
   "view_b": {
-    "available": false,
-    "reason": "skipped via --skip-assignments"
+    "available": true,
+    "reason": "ok"
   },
   "warnings": {
     "failed_procedure_ids": [],

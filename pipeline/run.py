@@ -83,7 +83,10 @@ def main(argv: list[str] | None = None) -> int:
         log.warning("assignments skipped; View B will be unavailable")
     else:
         try:
-            assignments, assign_stats = fetch_assignments.fetch_assignments()
+            meeting_keys = {key for m in meetings for key in m["procedure_keys"]}
+            assignments, assign_stats = fetch_assignments.fetch_assignments(
+                extra_keys=meeting_keys
+            )
             view_b_available = True
         except Exception as exc:  # noqa: BLE001 - degrade, never take the site down
             view_b_reason = f"assignment source failed: {exc}"

@@ -64,10 +64,51 @@ def test_extract_assignments_roles_term_and_committee():
     assert opinion["committee"] == "PECH"  # explicit in-name-of wins
 
 
+def test_extract_assignments_single_dict_participation():
+    """JSON-LD compacts a one-element participation list to a bare object."""
+    proc = dict(PROC, had_participation=_participation())
+    rows = fetch_assignments._extract_assignments(proc)
+    assert len(rows) == 1
+    assert rows[0]["mep_id"] == "256891"
+    assert rows[0]["committee"] is None  # no lead-committee row present
+
+
+def test_extract_assignments_ignores_bare_string_entries():
+    proc = dict(PROC, had_participation=["eli/dl/participation/ref-only", _participation()])
+    rows = fetch_assignments._extract_assignments(proc)
+    assert len(rows) == 1
+
+
+def test_extract_assignments_multi_role_participation():
+    """One participation can carry both shadow roles -> one row per role."""
+    proc = dict(
+        PROC,
+        had_participation=[
+            _participation(
+                participation_role=[
+                    "def/ep-roles/RAPPORTEUR_SHADOW_OPINION",
+                    "def/ep-roles/RAPPORTEUR_SHADOW",
+                ]
+            )
+        ],
+    )
+    rows = fetch_assignments._extract_assignments(proc)
+    assert {r["role"] for r in rows} == {"shadow_rapporteur", "shadow_rapporteur_opinion"}
+    assert all(r["mep_id"] == "256891" for r in rows)
+
+
 def test_extract_assignments_display_code_fallback():
     proc = dict(PROC, label=None)
     rows = fetch_assignments._extract_assignments(proc)
     assert rows[0]["procedure_code"] == "2023/0448(COD)"  # rebuilt from key + type
+
+
+def test_in_scope():
+    years = [2021, 2022, 2023, 2024, 2025, 2026]
+    assert fetch_assignments._in_scope("2023-0448", years)
+    assert not fetch_assignments._in_scope("2016-0397", years)
+    assert not fetch_assignments._in_scope("garbage", years)
+    assert not fetch_assignments._in_scope("", years)
 
 
 def test_dedupe_assignments_keeps_earliest():

@@ -143,6 +143,12 @@ const initial = [...rows].sort((x, y) => x.a.rank - y.a.rank);
     <button type="button" class="btn" id="btn-reset">Reset</button>
   </div>
 
+  <noscript>
+    <p class="caveat">
+      Filtering, sorting and search need JavaScript. Without it, the full disclosure-volume
+      table is shown below in official rank order.
+    </p>
+  </noscript>
   <p class="board-meta" id="board-count" role="status" aria-live="polite"></p>
 
   <div class="table-wrap">
