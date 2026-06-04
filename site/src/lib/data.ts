@@ -179,4 +179,4 @@ export function groupColor(short: string): string {
 
 export const REPORT_ERROR_URL =
   'mailto:busterfranken@gmail.com?subject=MEP%20of%20the%20Week%20%E2%80%94%20data%20correction';
-export const REPO_URL = 'https://github.com/busterfranken/mpoftheweek';
+export const REPO_URL = 'https://github.com/BusterFranken/mpoftheweek';
