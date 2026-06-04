@@ -302,36 +302,36 @@
         "share_registered": 0.5603
       },
       {
-        "distinct_organisations": 263,
+        "distinct_organisations": 264,
         "first_meeting_date": "2024-09-03",
         "last_meeting_date": "2026-06-03",
         "meetings_by_capacity": {
           "committee_chair": 0,
-          "member": 345,
+          "member": 347,
           "other": 0,
           "rapporteur": 13,
           "shadow_rapporteur": 11
         },
-        "meetings_total": 369,
+        "meetings_total": 371,
         "mep_id": "191693",
         "rank": 18,
-        "share_registered": 0.477
+        "share_registered": 0.4771
       },
       {
         "distinct_organisations": 291,
         "first_meeting_date": "2024-07-23",
-        "last_meeting_date": "2026-05-29",
+        "last_meeting_date": "2026-06-04",
         "meetings_by_capacity": {
           "committee_chair": 0,
-          "member": 300,
+          "member": 303,
           "other": 0,
           "rapporteur": 20,
           "shadow_rapporteur": 29
         },
-        "meetings_total": 349,
+        "meetings_total": 352,
         "mep_id": "256979",
         "rank": 19,
-        "share_registered": 0.5731
+        "share_registered": 0.5739
       },
       {
         "distinct_organisations": 287,
@@ -611,31 +611,31 @@
         "last_meeting_date": "2026-05-13",
         "meetings_by_capacity": {
           "committee_chair": 0,
-          "member": 154,
+          "member": 155,
           "other": 49,
           "rapporteur": 59,
           "shadow_rapporteur": 23
         },
-        "meetings_total": 285,
+        "meetings_total": 286,
         "mep_id": "190464",
         "rank": 37,
-        "share_registered": 0.2702
+        "share_registered": 0.2727
       },
       {
-        "distinct_organisations": 226,
+        "distinct_organisations": 227,
         "first_meeting_date": "2024-09-10",
-        "last_meeting_date": "2026-05-21",
+        "last_meeting_date": "2026-06-03",
         "meetings_by_capacity": {
           "committee_chair": 0,
-          "member": 247,
+          "member": 248,
           "other": 0,
           "rapporteur": 27,
           "shadow_rapporteur": 11
         },
-        "meetings_total": 285,
+        "meetings_total": 286,
         "mep_id": "197429",
         "rank": 38,
-        "share_registered": 0.4877
+        "share_registered": 0.486
       },
       {
         "distinct_organisations": 223,
@@ -718,6 +718,22 @@
         "share_registered": 0.5481
       },
       {
+        "distinct_organisations": 240,
+        "first_meeting_date": "2024-07-29",
+        "last_meeting_date": "2026-06-02",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 236,
+          "other": 0,
+          "rapporteur": 5,
+          "shadow_rapporteur": 26
+        },
+        "meetings_total": 267,
+        "mep_id": "256935",
+        "rank": 44,
+        "share_registered": 0.221
+      },
+      {
         "distinct_organisations": 230,
         "first_meeting_date": "2024-07-17",
         "last_meeting_date": "2026-04-23",
@@ -730,7 +746,7 @@
         },
         "meetings_total": 266,
         "mep_id": "197722",
-        "rank": 44,
+        "rank": 45,
         "share_registered": 0.0714
       },
       {
@@ -746,24 +762,8 @@
         },
         "meetings_total": 262,
         "mep_id": "183916",
-        "rank": 45,
-        "share_registered": 0.6107
-      },
-      {
-        "distinct_organisations": 235,
-        "first_meeting_date": "2024-07-29",
-        "last_meeting_date": "2026-06-02",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 230,
-          "other": 0,
-          "rapporteur": 5,
-          "shadow_rapporteur": 26
-        },
-        "meetings_total": 261,
-        "mep_id": "256935",
         "rank": 46,
-        "share_registered": 0.2261
+        "share_registered": 0.6107
       },
       {
         "distinct_organisations": 183,
@@ -830,6 +830,22 @@
         "share_registered": 0.786
       },
       {
+        "distinct_organisations": 168,
+        "first_meeting_date": "2024-07-16",
+        "last_meeting_date": "2026-06-04",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 130,
+          "other": 0,
+          "rapporteur": 99,
+          "shadow_rapporteur": 27
+        },
+        "meetings_total": 256,
+        "mep_id": "197581",
+        "rank": 51,
+        "share_registered": 0.7188
+      },
+      {
         "distinct_organisations": 165,
         "first_meeting_date": "2024-07-16",
         "last_meeting_date": "2026-05-28",
@@ -842,7 +858,7 @@
         },
         "meetings_total": 255,
         "mep_id": "257023",
-        "rank": 51,
+        "rank": 52,
         "share_registered": 0.6157
       },
       {
@@ -858,7 +874,7 @@
         },
         "meetings_total": 254,
         "mep_id": "197839",
-        "rank": 52,
+        "rank": 53,
         "share_registered": 0.6181
       },
       {
@@ -874,7 +890,7 @@
         },
         "meetings_total": 253,
         "mep_id": "256968",
-        "rank": 53,
+        "rank": 54,
         "share_registered": 0.6403
       },
       {
@@ -890,8 +906,24 @@
         },
         "meetings_total": 252,
         "mep_id": "197406",
-        "rank": 54,
+        "rank": 55,
         "share_registered": 0.5635
+      },
+      {
+        "distinct_organisations": 158,
+        "first_meeting_date": "2024-07-17",
+        "last_meeting_date": "2026-06-04",
+        "meetings_by_capacity": {
+          "committee_chair": 1,
+          "member": 216,
+          "other": 0,
+          "rapporteur": 30,
+          "shadow_rapporteur": 4
+        },
+        "meetings_total": 251,
+        "mep_id": "38542",
+        "rank": 56,
+        "share_registered": 0.6574
       },
       {
         "distinct_organisations": 238,
@@ -906,24 +938,8 @@
         },
         "meetings_total": 250,
         "mep_id": "197439",
-        "rank": 55,
+        "rank": 57,
         "share_registered": 0.156
-      },
-      {
-        "distinct_organisations": 158,
-        "first_meeting_date": "2024-07-17",
-        "last_meeting_date": "2026-05-12",
-        "meetings_by_capacity": {
-          "committee_chair": 1,
-          "member": 214,
-          "other": 0,
-          "rapporteur": 30,
-          "shadow_rapporteur": 4
-        },
-        "meetings_total": 249,
-        "mep_id": "38542",
-        "rank": 56,
-        "share_registered": 0.6546
       },
       {
         "distinct_organisations": 211,
@@ -938,24 +954,24 @@
         },
         "meetings_total": 248,
         "mep_id": "124808",
-        "rank": 57,
+        "rank": 58,
         "share_registered": 0.3992
       },
       {
-        "distinct_organisations": 185,
+        "distinct_organisations": 188,
         "first_meeting_date": "2024-07-17",
-        "last_meeting_date": "2026-06-01",
+        "last_meeting_date": "2026-06-04",
         "meetings_by_capacity": {
           "committee_chair": 0,
           "member": 170,
           "other": 0,
-          "rapporteur": 61,
-          "shadow_rapporteur": 11
+          "rapporteur": 62,
+          "shadow_rapporteur": 14
         },
-        "meetings_total": 242,
+        "meetings_total": 246,
         "mep_id": "97399",
-        "rank": 58,
-        "share_registered": 0.6612
+        "rank": 59,
+        "share_registered": 0.6545
       },
       {
         "distinct_organisations": 178,
@@ -970,7 +986,7 @@
         },
         "meetings_total": 239,
         "mep_id": "197503",
-        "rank": 59,
+        "rank": 60,
         "share_registered": 0.5188
       },
       {
@@ -986,24 +1002,24 @@
         },
         "meetings_total": 238,
         "mep_id": "106936",
-        "rank": 60,
+        "rank": 61,
         "share_registered": 0.3739
       },
       {
-        "distinct_organisations": 158,
-        "first_meeting_date": "2024-07-16",
-        "last_meeting_date": "2026-03-27",
+        "distinct_organisations": 211,
+        "first_meeting_date": "2024-08-15",
+        "last_meeting_date": "2026-06-03",
         "meetings_by_capacity": {
           "committee_chair": 0,
-          "member": 125,
-          "other": 0,
-          "rapporteur": 86,
-          "shadow_rapporteur": 27
+          "member": 209,
+          "other": 5,
+          "rapporteur": 10,
+          "shadow_rapporteur": 13
         },
-        "meetings_total": 238,
-        "mep_id": "197581",
-        "rank": 61,
-        "share_registered": 0.7311
+        "meetings_total": 237,
+        "mep_id": "256810",
+        "rank": 62,
+        "share_registered": 0.3671
       },
       {
         "distinct_organisations": 183,
@@ -1018,7 +1034,7 @@
         },
         "meetings_total": 237,
         "mep_id": "256845",
-        "rank": 62,
+        "rank": 63,
         "share_registered": 0.4768
       },
       {
@@ -1034,24 +1050,8 @@
         },
         "meetings_total": 235,
         "mep_id": "37312",
-        "rank": 63,
-        "share_registered": 0.3787
-      },
-      {
-        "distinct_organisations": 208,
-        "first_meeting_date": "2024-08-15",
-        "last_meeting_date": "2026-06-03",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 206,
-          "other": 5,
-          "rapporteur": 10,
-          "shadow_rapporteur": 13
-        },
-        "meetings_total": 234,
-        "mep_id": "256810",
         "rank": 64,
-        "share_registered": 0.3718
+        "share_registered": 0.3787
       },
       {
         "distinct_organisations": 225,
@@ -1710,20 +1710,20 @@
         "share_registered": 0.627
       },
       {
-        "distinct_organisations": 162,
+        "distinct_organisations": 161,
         "first_meeting_date": "2024-07-25",
         "last_meeting_date": "2026-05-29",
         "meetings_by_capacity": {
           "committee_chair": 0,
           "member": 161,
-          "other": 21,
+          "other": 20,
           "rapporteur": 0,
           "shadow_rapporteur": 1
         },
-        "meetings_total": 183,
+        "meetings_total": 182,
         "mep_id": "197430",
         "rank": 106,
-        "share_registered": 0.3115
+        "share_registered": 0.3132
       },
       {
         "distinct_organisations": 166,
@@ -2046,22 +2046,6 @@
         "share_registered": 0.7212
       },
       {
-        "distinct_organisations": 140,
-        "first_meeting_date": "2024-07-26",
-        "last_meeting_date": "2026-05-27",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 61,
-          "other": 0,
-          "rapporteur": 68,
-          "shadow_rapporteur": 34
-        },
-        "meetings_total": 163,
-        "mep_id": "197549",
-        "rank": 127,
-        "share_registered": 0.5644
-      },
-      {
         "distinct_organisations": 134,
         "first_meeting_date": "2024-07-16",
         "last_meeting_date": "2026-04-24",
@@ -2074,8 +2058,24 @@
         },
         "meetings_total": 163,
         "mep_id": "256824",
-        "rank": 128,
+        "rank": 127,
         "share_registered": 0.5337
+      },
+      {
+        "distinct_organisations": 139,
+        "first_meeting_date": "2024-07-26",
+        "last_meeting_date": "2026-05-27",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 61,
+          "other": 0,
+          "rapporteur": 67,
+          "shadow_rapporteur": 34
+        },
+        "meetings_total": 162,
+        "mep_id": "197549",
+        "rank": 128,
+        "share_registered": 0.5617
       },
       {
         "distinct_organisations": 146,
@@ -2318,6 +2318,38 @@
         "share_registered": 0.1156
       },
       {
+        "distinct_organisations": 128,
+        "first_meeting_date": "2024-07-16",
+        "last_meeting_date": "2026-06-02",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 141,
+          "other": 0,
+          "rapporteur": 4,
+          "shadow_rapporteur": 2
+        },
+        "meetings_total": 147,
+        "mep_id": "251874",
+        "rank": 144,
+        "share_registered": 0.2245
+      },
+      {
+        "distinct_organisations": 108,
+        "first_meeting_date": "2024-07-17",
+        "last_meeting_date": "2026-06-03",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 139,
+          "other": 0,
+          "rapporteur": 6,
+          "shadow_rapporteur": 2
+        },
+        "meetings_total": 147,
+        "mep_id": "257088",
+        "rank": 145,
+        "share_registered": 0.3401
+      },
+      {
         "distinct_organisations": 107,
         "first_meeting_date": "2024-07-18",
         "last_meeting_date": "2026-03-11",
@@ -2330,40 +2362,8 @@
         },
         "meetings_total": 147,
         "mep_id": "197403",
-        "rank": 144,
-        "share_registered": 0.381
-      },
-      {
-        "distinct_organisations": 127,
-        "first_meeting_date": "2024-07-16",
-        "last_meeting_date": "2026-06-02",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 140,
-          "other": 0,
-          "rapporteur": 4,
-          "shadow_rapporteur": 2
-        },
-        "meetings_total": 146,
-        "mep_id": "251874",
-        "rank": 145,
-        "share_registered": 0.226
-      },
-      {
-        "distinct_organisations": 108,
-        "first_meeting_date": "2024-07-17",
-        "last_meeting_date": "2026-05-28",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 138,
-          "other": 0,
-          "rapporteur": 6,
-          "shadow_rapporteur": 2
-        },
-        "meetings_total": 146,
-        "mep_id": "257088",
         "rank": 146,
-        "share_registered": 0.3425
+        "share_registered": 0.381
       },
       {
         "distinct_organisations": 105,
@@ -2686,6 +2686,22 @@
         "share_registered": 0.8955
       },
       {
+        "distinct_organisations": 115,
+        "first_meeting_date": "2024-07-24",
+        "last_meeting_date": "2026-05-13",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 79,
+          "other": 0,
+          "rapporteur": 39,
+          "shadow_rapporteur": 16
+        },
+        "meetings_total": 134,
+        "mep_id": "197401",
+        "rank": 167,
+        "share_registered": 0.5672
+      },
+      {
         "distinct_organisations": 125,
         "first_meeting_date": "2024-09-10",
         "last_meeting_date": "2026-06-04",
@@ -2698,7 +2714,7 @@
         },
         "meetings_total": 133,
         "mep_id": "197623",
-        "rank": 167,
+        "rank": 168,
         "share_registered": 0.0677
       },
       {
@@ -2714,7 +2730,7 @@
         },
         "meetings_total": 133,
         "mep_id": "197543",
-        "rank": 168,
+        "rank": 169,
         "share_registered": 0.203
       },
       {
@@ -2730,7 +2746,7 @@
         },
         "meetings_total": 133,
         "mep_id": "28419",
-        "rank": 169,
+        "rank": 170,
         "share_registered": 0.6917
       },
       {
@@ -2746,7 +2762,7 @@
         },
         "meetings_total": 133,
         "mep_id": "124836",
-        "rank": 170,
+        "rank": 171,
         "share_registered": 0.5564
       },
       {
@@ -2762,7 +2778,7 @@
         },
         "meetings_total": 133,
         "mep_id": "197500",
-        "rank": 171,
+        "rank": 172,
         "share_registered": 0.2481
       },
       {
@@ -2778,7 +2794,7 @@
         },
         "meetings_total": 132,
         "mep_id": "197580",
-        "rank": 172,
+        "rank": 173,
         "share_registered": 0.3864
       },
       {
@@ -2794,7 +2810,7 @@
         },
         "meetings_total": 131,
         "mep_id": "96752",
-        "rank": 173,
+        "rank": 174,
         "share_registered": 0.5573
       },
       {
@@ -2810,7 +2826,7 @@
         },
         "meetings_total": 131,
         "mep_id": "256994",
-        "rank": 174,
+        "rank": 175,
         "share_registered": 0.4427
       },
       {
@@ -2826,7 +2842,7 @@
         },
         "meetings_total": 131,
         "mep_id": "198073",
-        "rank": 175,
+        "rank": 176,
         "share_registered": 0.5649
       },
       {
@@ -2842,24 +2858,8 @@
         },
         "meetings_total": 130,
         "mep_id": "197395",
-        "rank": 176,
-        "share_registered": 0.5
-      },
-      {
-        "distinct_organisations": 112,
-        "first_meeting_date": "2024-07-24",
-        "last_meeting_date": "2026-05-06",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 79,
-          "other": 0,
-          "rapporteur": 35,
-          "shadow_rapporteur": 16
-        },
-        "meetings_total": 130,
-        "mep_id": "197401",
         "rank": 177,
-        "share_registered": 0.5692
+        "share_registered": 0.5
       },
       {
         "distinct_organisations": 109,
@@ -2894,6 +2894,22 @@
         "share_registered": 0.7364
       },
       {
+        "distinct_organisations": 112,
+        "first_meeting_date": "2024-09-17",
+        "last_meeting_date": "2026-06-01",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 117,
+          "other": 0,
+          "rapporteur": 5,
+          "shadow_rapporteur": 6
+        },
+        "meetings_total": 128,
+        "mep_id": "197444",
+        "rank": 180,
+        "share_registered": 0.7969
+      },
+      {
         "distinct_organisations": 116,
         "first_meeting_date": "2024-09-02",
         "last_meeting_date": "2026-05-13",
@@ -2906,7 +2922,7 @@
         },
         "meetings_total": 127,
         "mep_id": "256993",
-        "rank": 180,
+        "rank": 181,
         "share_registered": 0.1102
       },
       {
@@ -2922,7 +2938,7 @@
         },
         "meetings_total": 126,
         "mep_id": "256961",
-        "rank": 181,
+        "rank": 182,
         "share_registered": 0.4286
       },
       {
@@ -2938,24 +2954,8 @@
         },
         "meetings_total": 126,
         "mep_id": "256898",
-        "rank": 182,
-        "share_registered": 0.7222
-      },
-      {
-        "distinct_organisations": 110,
-        "first_meeting_date": "2024-09-17",
-        "last_meeting_date": "2026-05-11",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 115,
-          "other": 0,
-          "rapporteur": 5,
-          "shadow_rapporteur": 6
-        },
-        "meetings_total": 126,
-        "mep_id": "197444",
         "rank": 183,
-        "share_registered": 0.8016
+        "share_registered": 0.7222
       },
       {
         "distinct_organisations": 95,
@@ -4238,6 +4238,22 @@
         "share_registered": 0.3804
       },
       {
+        "distinct_organisations": 83,
+        "first_meeting_date": "2024-09-10",
+        "last_meeting_date": "2026-05-06",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 85,
+          "other": 0,
+          "rapporteur": 0,
+          "shadow_rapporteur": 6
+        },
+        "meetings_total": 91,
+        "mep_id": "257090",
+        "rank": 264,
+        "share_registered": 0.5275
+      },
+      {
         "distinct_organisations": 79,
         "first_meeting_date": "2024-07-17",
         "last_meeting_date": "2026-04-15",
@@ -4250,7 +4266,7 @@
         },
         "meetings_total": 91,
         "mep_id": "99945",
-        "rank": 264,
+        "rank": 265,
         "share_registered": 0.3736
       },
       {
@@ -4266,7 +4282,7 @@
         },
         "meetings_total": 91,
         "mep_id": "256926",
-        "rank": 265,
+        "rank": 266,
         "share_registered": 0.2747
       },
       {
@@ -4282,7 +4298,7 @@
         },
         "meetings_total": 91,
         "mep_id": "197591",
-        "rank": 266,
+        "rank": 267,
         "share_registered": 0.7473
       },
       {
@@ -4298,7 +4314,7 @@
         },
         "meetings_total": 91,
         "mep_id": "125046",
-        "rank": 267,
+        "rank": 268,
         "share_registered": 0.6484
       },
       {
@@ -4314,24 +4330,8 @@
         },
         "meetings_total": 90,
         "mep_id": "257238",
-        "rank": 268,
-        "share_registered": 0.2333
-      },
-      {
-        "distinct_organisations": 82,
-        "first_meeting_date": "2024-09-10",
-        "last_meeting_date": "2026-05-06",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 84,
-          "other": 0,
-          "rapporteur": 0,
-          "shadow_rapporteur": 6
-        },
-        "meetings_total": 90,
-        "mep_id": "257090",
         "rank": 269,
-        "share_registered": 0.5222
+        "share_registered": 0.2333
       },
       {
         "distinct_organisations": 85,
@@ -4462,6 +4462,22 @@
         "share_registered": 0.3605
       },
       {
+        "distinct_organisations": 81,
+        "first_meeting_date": "2024-09-10",
+        "last_meeting_date": "2026-06-01",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 79,
+          "other": 0,
+          "rapporteur": 1,
+          "shadow_rapporteur": 5
+        },
+        "meetings_total": 85,
+        "mep_id": "28307",
+        "rank": 278,
+        "share_registered": 0.4353
+      },
+      {
         "distinct_organisations": 74,
         "first_meeting_date": "2024-09-11",
         "last_meeting_date": "2026-06-02",
@@ -4474,7 +4490,7 @@
         },
         "meetings_total": 85,
         "mep_id": "257040",
-        "rank": 278,
+        "rank": 279,
         "share_registered": 0.6353
       },
       {
@@ -4490,7 +4506,7 @@
         },
         "meetings_total": 84,
         "mep_id": "197578",
-        "rank": 279,
+        "rank": 280,
         "share_registered": 0.4881
       },
       {
@@ -4506,7 +4522,7 @@
         },
         "meetings_total": 84,
         "mep_id": "256847",
-        "rank": 280,
+        "rank": 281,
         "share_registered": 0.7619
       },
       {
@@ -4522,7 +4538,7 @@
         },
         "meetings_total": 84,
         "mep_id": "126699",
-        "rank": 281,
+        "rank": 282,
         "share_registered": 0.4167
       },
       {
@@ -4538,7 +4554,7 @@
         },
         "meetings_total": 84,
         "mep_id": "257437",
-        "rank": 282,
+        "rank": 283,
         "share_registered": 0.5
       },
       {
@@ -4554,7 +4570,7 @@
         },
         "meetings_total": 82,
         "mep_id": "256964",
-        "rank": 283,
+        "rank": 284,
         "share_registered": 0.5732
       },
       {
@@ -4570,7 +4586,7 @@
         },
         "meetings_total": 82,
         "mep_id": "256939",
-        "rank": 284,
+        "rank": 285,
         "share_registered": 0.2317
       },
       {
@@ -4586,24 +4602,8 @@
         },
         "meetings_total": 81,
         "mep_id": "197470",
-        "rank": 285,
-        "share_registered": 0.4444
-      },
-      {
-        "distinct_organisations": 77,
-        "first_meeting_date": "2024-09-10",
-        "last_meeting_date": "2026-05-06",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 79,
-          "other": 0,
-          "rapporteur": 1,
-          "shadow_rapporteur": 1
-        },
-        "meetings_total": 81,
-        "mep_id": "28307",
         "rank": 286,
-        "share_registered": 0.4198
+        "share_registered": 0.4444
       },
       {
         "distinct_organisations": 76,
@@ -4830,6 +4830,22 @@
         "share_registered": 0.0263
       },
       {
+        "distinct_organisations": 73,
+        "first_meeting_date": "2024-07-18",
+        "last_meeting_date": "2026-06-04",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 57,
+          "other": 12,
+          "rapporteur": 6,
+          "shadow_rapporteur": 0
+        },
+        "meetings_total": 75,
+        "mep_id": "204419",
+        "rank": 301,
+        "share_registered": 0.3067
+      },
+      {
         "distinct_organisations": 71,
         "first_meeting_date": "2024-09-10",
         "last_meeting_date": "2026-05-12",
@@ -4842,7 +4858,7 @@
         },
         "meetings_total": 75,
         "mep_id": "257155",
-        "rank": 301,
+        "rank": 302,
         "share_registered": 0.0267
       },
       {
@@ -4858,24 +4874,8 @@
         },
         "meetings_total": 75,
         "mep_id": "257169",
-        "rank": 302,
-        "share_registered": 0.8
-      },
-      {
-        "distinct_organisations": 72,
-        "first_meeting_date": "2024-07-18",
-        "last_meeting_date": "2026-06-04",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 56,
-          "other": 12,
-          "rapporteur": 6,
-          "shadow_rapporteur": 0
-        },
-        "meetings_total": 74,
-        "mep_id": "204419",
         "rank": 303,
-        "share_registered": 0.3108
+        "share_registered": 0.8
       },
       {
         "distinct_organisations": 68,
@@ -5535,6 +5535,22 @@
       },
       {
         "distinct_organisations": 58,
+        "first_meeting_date": "2024-07-23",
+        "last_meeting_date": "2026-05-25",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 64,
+          "other": 0,
+          "rapporteur": 0,
+          "shadow_rapporteur": 0
+        },
+        "meetings_total": 64,
+        "mep_id": "188096",
+        "rank": 345,
+        "share_registered": 0.4062
+      },
+      {
+        "distinct_organisations": 58,
         "first_meeting_date": "2024-07-16",
         "last_meeting_date": "2026-03-23",
         "meetings_by_capacity": {
@@ -5546,24 +5562,8 @@
         },
         "meetings_total": 63,
         "mep_id": "256890",
-        "rank": 345,
-        "share_registered": 0.3492
-      },
-      {
-        "distinct_organisations": 57,
-        "first_meeting_date": "2024-07-23",
-        "last_meeting_date": "2026-05-25",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 63,
-          "other": 0,
-          "rapporteur": 0,
-          "shadow_rapporteur": 0
-        },
-        "meetings_total": 63,
-        "mep_id": "188096",
         "rank": 346,
-        "share_registered": 0.4127
+        "share_registered": 0.3492
       },
       {
         "distinct_organisations": 54,
@@ -5806,6 +5806,22 @@
         "share_registered": 0.4915
       },
       {
+        "distinct_organisations": 55,
+        "first_meeting_date": "2024-07-18",
+        "last_meeting_date": "2026-06-04",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 58,
+          "other": 0,
+          "rapporteur": 0,
+          "shadow_rapporteur": 0
+        },
+        "meetings_total": 58,
+        "mep_id": "257078",
+        "rank": 362,
+        "share_registered": 0.6552
+      },
+      {
         "distinct_organisations": 54,
         "first_meeting_date": "2024-09-10",
         "last_meeting_date": "2026-04-15",
@@ -5818,7 +5834,7 @@
         },
         "meetings_total": 58,
         "mep_id": "95074",
-        "rank": 362,
+        "rank": 363,
         "share_registered": 0.2759
       },
       {
@@ -5834,7 +5850,7 @@
         },
         "meetings_total": 58,
         "mep_id": "244571",
-        "rank": 363,
+        "rank": 364,
         "share_registered": 0.6552
       },
       {
@@ -5850,7 +5866,7 @@
         },
         "meetings_total": 58,
         "mep_id": "197498",
-        "rank": 364,
+        "rank": 365,
         "share_registered": 0.5345
       },
       {
@@ -5866,7 +5882,7 @@
         },
         "meetings_total": 58,
         "mep_id": "257145",
-        "rank": 365,
+        "rank": 366,
         "share_registered": 0.2414
       },
       {
@@ -5882,7 +5898,7 @@
         },
         "meetings_total": 57,
         "mep_id": "28229",
-        "rank": 366,
+        "rank": 367,
         "share_registered": 0.3333
       },
       {
@@ -5898,24 +5914,8 @@
         },
         "meetings_total": 57,
         "mep_id": "197412",
-        "rank": 367,
-        "share_registered": 0.2982
-      },
-      {
-        "distinct_organisations": 53,
-        "first_meeting_date": "2024-07-18",
-        "last_meeting_date": "2026-05-22",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 56,
-          "other": 0,
-          "rapporteur": 0,
-          "shadow_rapporteur": 0
-        },
-        "meetings_total": 56,
-        "mep_id": "257078",
         "rank": 368,
-        "share_registered": 0.6429
+        "share_registered": 0.2982
       },
       {
         "distinct_organisations": 51,
@@ -6206,6 +6206,22 @@
         "share_registered": 0.28
       },
       {
+        "distinct_organisations": 47,
+        "first_meeting_date": "2024-07-17",
+        "last_meeting_date": "2026-06-02",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 50,
+          "other": 0,
+          "rapporteur": 0,
+          "shadow_rapporteur": 0
+        },
+        "meetings_total": 50,
+        "mep_id": "124858",
+        "rank": 387,
+        "share_registered": 0.32
+      },
+      {
         "distinct_organisations": 45,
         "first_meeting_date": "2024-09-03",
         "last_meeting_date": "2026-03-04",
@@ -6218,7 +6234,7 @@
         },
         "meetings_total": 50,
         "mep_id": "257002",
-        "rank": 387,
+        "rank": 388,
         "share_registered": 0.76
       },
       {
@@ -6234,7 +6250,7 @@
         },
         "meetings_total": 49,
         "mep_id": "107212",
-        "rank": 388,
+        "rank": 389,
         "share_registered": 0.449
       },
       {
@@ -6250,24 +6266,8 @@
         },
         "meetings_total": 49,
         "mep_id": "257128",
-        "rank": 389,
-        "share_registered": 0.4082
-      },
-      {
-        "distinct_organisations": 45,
-        "first_meeting_date": "2024-07-17",
-        "last_meeting_date": "2026-05-29",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 48,
-          "other": 0,
-          "rapporteur": 0,
-          "shadow_rapporteur": 0
-        },
-        "meetings_total": 48,
-        "mep_id": "124858",
         "rank": 390,
-        "share_registered": 0.375
+        "share_registered": 0.4082
       },
       {
         "distinct_organisations": 45,
@@ -6382,6 +6382,22 @@
         "share_registered": 0.6957
       },
       {
+        "distinct_organisations": 44,
+        "first_meeting_date": "2024-09-10",
+        "last_meeting_date": "2025-09-23",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 45,
+          "other": 0,
+          "rapporteur": 0,
+          "shadow_rapporteur": 0
+        },
+        "meetings_total": 45,
+        "mep_id": "197829",
+        "rank": 398,
+        "share_registered": 0.3333
+      },
+      {
         "distinct_organisations": 40,
         "first_meeting_date": "2024-07-17",
         "last_meeting_date": "2026-05-26",
@@ -6394,7 +6410,7 @@
         },
         "meetings_total": 45,
         "mep_id": "256966",
-        "rank": 398,
+        "rank": 399,
         "share_registered": 0.0
       },
       {
@@ -6410,8 +6426,24 @@
         },
         "meetings_total": 45,
         "mep_id": "256906",
-        "rank": 399,
+        "rank": 400,
         "share_registered": 0.2222
+      },
+      {
+        "distinct_organisations": 32,
+        "first_meeting_date": "2024-09-07",
+        "last_meeting_date": "2026-06-04",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 42,
+          "other": 0,
+          "rapporteur": 0,
+          "shadow_rapporteur": 3
+        },
+        "meetings_total": 45,
+        "mep_id": "256857",
+        "rank": 401,
+        "share_registered": 0.5556
       },
       {
         "distinct_organisations": 44,
@@ -6426,24 +6458,8 @@
         },
         "meetings_total": 44,
         "mep_id": "124760",
-        "rank": 400,
+        "rank": 402,
         "share_registered": 0.0682
-      },
-      {
-        "distinct_organisations": 44,
-        "first_meeting_date": "2024-09-10",
-        "last_meeting_date": "2025-07-16",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 44,
-          "other": 0,
-          "rapporteur": 0,
-          "shadow_rapporteur": 0
-        },
-        "meetings_total": 44,
-        "mep_id": "197829",
-        "rank": 401,
-        "share_registered": 0.3409
       },
       {
         "distinct_organisations": 42,
@@ -6458,24 +6474,8 @@
         },
         "meetings_total": 44,
         "mep_id": "124785",
-        "rank": 402,
-        "share_registered": 0.5909
-      },
-      {
-        "distinct_organisations": 32,
-        "first_meeting_date": "2024-09-07",
-        "last_meeting_date": "2026-06-01",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 41,
-          "other": 0,
-          "rapporteur": 0,
-          "shadow_rapporteur": 3
-        },
-        "meetings_total": 44,
-        "mep_id": "256857",
         "rank": 403,
-        "share_registered": 0.5455
+        "share_registered": 0.5909
       },
       {
         "distinct_organisations": 41,
@@ -6718,6 +6718,22 @@
         "share_registered": 0.0732
       },
       {
+        "distinct_organisations": 34,
+        "first_meeting_date": "2024-09-12",
+        "last_meeting_date": "2026-06-03",
+        "meetings_by_capacity": {
+          "committee_chair": 0,
+          "member": 28,
+          "other": 0,
+          "rapporteur": 0,
+          "shadow_rapporteur": 12
+        },
+        "meetings_total": 40,
+        "mep_id": "112748",
+        "rank": 419,
+        "share_registered": 0.6
+      },
+      {
         "distinct_organisations": 38,
         "first_meeting_date": "2024-08-21",
         "last_meeting_date": "2026-01-14",
@@ -6730,7 +6746,7 @@
         },
         "meetings_total": 39,
         "mep_id": "256881",
-        "rank": 419,
+        "rank": 420,
         "share_registered": 0.4359
       },
       {
@@ -6746,7 +6762,7 @@
         },
         "meetings_total": 39,
         "mep_id": "204333",
-        "rank": 420,
+        "rank": 421,
         "share_registered": 0.4872
       },
       {
@@ -6762,7 +6778,7 @@
         },
         "meetings_total": 39,
         "mep_id": "1294",
-        "rank": 421,
+        "rank": 422,
         "share_registered": 0.2051
       },
       {
@@ -6778,24 +6794,8 @@
         },
         "meetings_total": 39,
         "mep_id": "260035",
-        "rank": 422,
-        "share_registered": 0.3846
-      },
-      {
-        "distinct_organisations": 33,
-        "first_meeting_date": "2024-09-12",
-        "last_meeting_date": "2026-06-02",
-        "meetings_by_capacity": {
-          "committee_chair": 0,
-          "member": 27,
-          "other": 0,
-          "rapporteur": 0,
-          "shadow_rapporteur": 12
-        },
-        "meetings_total": 39,
-        "mep_id": "112748",
         "rank": 423,
-        "share_registered": 0.5897
+        "share_registered": 0.3846
       },
       {
         "distinct_organisations": 33,
@@ -13086,17 +13086,17 @@
         "coverage_pct": 28.6,
         "files_shadowed": 7,
         "files_with_related_meeting": 2,
-        "mep_id": "257297",
+        "mep_id": "97399",
         "rank": 196,
-        "shadow_meetings_total": 12
+        "shadow_meetings_total": 14
       },
       {
         "coverage_pct": 28.6,
         "files_shadowed": 7,
         "files_with_related_meeting": 2,
-        "mep_id": "97399",
+        "mep_id": "257297",
         "rank": 197,
-        "shadow_meetings_total": 11
+        "shadow_meetings_total": 12
       },
       {
         "coverage_pct": 28.6,
@@ -14118,8 +14118,16 @@
         "coverage_pct": 11.8,
         "files_shadowed": 17,
         "files_with_related_meeting": 2,
-        "mep_id": "257255",
+        "mep_id": "28307",
         "rank": 325,
+        "shadow_meetings_total": 5
+      },
+      {
+        "coverage_pct": 11.8,
+        "files_shadowed": 17,
+        "files_with_related_meeting": 2,
+        "mep_id": "257255",
+        "rank": 326,
         "shadow_meetings_total": 5
       },
       {
@@ -14127,7 +14135,7 @@
         "files_shadowed": 18,
         "files_with_related_meeting": 2,
         "mep_id": "257112",
-        "rank": 326,
+        "rank": 327,
         "shadow_meetings_total": 5
       },
       {
@@ -14135,7 +14143,7 @@
         "files_shadowed": 9,
         "files_with_related_meeting": 1,
         "mep_id": "257090",
-        "rank": 327,
+        "rank": 328,
         "shadow_meetings_total": 6
       },
       {
@@ -14143,14 +14151,6 @@
         "files_shadowed": 9,
         "files_with_related_meeting": 1,
         "mep_id": "197430",
-        "rank": 328,
-        "shadow_meetings_total": 1
-      },
-      {
-        "coverage_pct": 11.1,
-        "files_shadowed": 9,
-        "files_with_related_meeting": 1,
-        "mep_id": "256906",
         "rank": 329,
         "shadow_meetings_total": 1
       },
@@ -14158,7 +14158,7 @@
         "coverage_pct": 11.1,
         "files_shadowed": 9,
         "files_with_related_meeting": 1,
-        "mep_id": "257128",
+        "mep_id": "256906",
         "rank": 330,
         "shadow_meetings_total": 1
       },
@@ -14166,7 +14166,7 @@
         "coverage_pct": 11.1,
         "files_shadowed": 9,
         "files_with_related_meeting": 1,
-        "mep_id": "185771",
+        "mep_id": "257128",
         "rank": 331,
         "shadow_meetings_total": 1
       },
@@ -14174,8 +14174,16 @@
         "coverage_pct": 11.1,
         "files_shadowed": 9,
         "files_with_related_meeting": 1,
-        "mep_id": "256805",
+        "mep_id": "185771",
         "rank": 332,
+        "shadow_meetings_total": 1
+      },
+      {
+        "coverage_pct": 11.1,
+        "files_shadowed": 9,
+        "files_with_related_meeting": 1,
+        "mep_id": "256805",
+        "rank": 333,
         "shadow_meetings_total": 0
       },
       {
@@ -14183,7 +14191,7 @@
         "files_shadowed": 37,
         "files_with_related_meeting": 4,
         "mep_id": "197463",
-        "rank": 333,
+        "rank": 334,
         "shadow_meetings_total": 7
       },
       {
@@ -14191,7 +14199,7 @@
         "files_shadowed": 19,
         "files_with_related_meeting": 2,
         "mep_id": "201945",
-        "rank": 334,
+        "rank": 335,
         "shadow_meetings_total": 4
       },
       {
@@ -14199,7 +14207,7 @@
         "files_shadowed": 10,
         "files_with_related_meeting": 1,
         "mep_id": "257096",
-        "rank": 335,
+        "rank": 336,
         "shadow_meetings_total": 15
       },
       {
@@ -14207,14 +14215,6 @@
         "files_shadowed": 10,
         "files_with_related_meeting": 1,
         "mep_id": "124766",
-        "rank": 336,
-        "shadow_meetings_total": 4
-      },
-      {
-        "coverage_pct": 10.0,
-        "files_shadowed": 10,
-        "files_with_related_meeting": 1,
-        "mep_id": "97968",
         "rank": 337,
         "shadow_meetings_total": 4
       },
@@ -14222,8 +14222,16 @@
         "coverage_pct": 10.0,
         "files_shadowed": 10,
         "files_with_related_meeting": 1,
-        "mep_id": "257025",
+        "mep_id": "97968",
         "rank": 338,
+        "shadow_meetings_total": 4
+      },
+      {
+        "coverage_pct": 10.0,
+        "files_shadowed": 10,
+        "files_with_related_meeting": 1,
+        "mep_id": "257025",
+        "rank": 339,
         "shadow_meetings_total": 3
       },
       {
@@ -14231,14 +14239,6 @@
         "files_shadowed": 10,
         "files_with_related_meeting": 1,
         "mep_id": "257029",
-        "rank": 339,
-        "shadow_meetings_total": 2
-      },
-      {
-        "coverage_pct": 10.0,
-        "files_shadowed": 10,
-        "files_with_related_meeting": 1,
-        "mep_id": "257116",
         "rank": 340,
         "shadow_meetings_total": 2
       },
@@ -14246,15 +14246,15 @@
         "coverage_pct": 10.0,
         "files_shadowed": 10,
         "files_with_related_meeting": 1,
-        "mep_id": "257138",
+        "mep_id": "257116",
         "rank": 341,
-        "shadow_meetings_total": 1
+        "shadow_meetings_total": 2
       },
       {
         "coverage_pct": 10.0,
         "files_shadowed": 10,
         "files_with_related_meeting": 1,
-        "mep_id": "257000",
+        "mep_id": "257138",
         "rank": 342,
         "shadow_meetings_total": 1
       },
@@ -14262,7 +14262,7 @@
         "coverage_pct": 10.0,
         "files_shadowed": 10,
         "files_with_related_meeting": 1,
-        "mep_id": "96812",
+        "mep_id": "257000",
         "rank": 343,
         "shadow_meetings_total": 1
       },
@@ -14270,8 +14270,16 @@
         "coverage_pct": 10.0,
         "files_shadowed": 10,
         "files_with_related_meeting": 1,
-        "mep_id": "257127",
+        "mep_id": "96812",
         "rank": 344,
+        "shadow_meetings_total": 1
+      },
+      {
+        "coverage_pct": 10.0,
+        "files_shadowed": 10,
+        "files_with_related_meeting": 1,
+        "mep_id": "257127",
+        "rank": 345,
         "shadow_meetings_total": 1
       },
       {
@@ -14279,7 +14287,7 @@
         "files_shadowed": 21,
         "files_with_related_meeting": 2,
         "mep_id": "257044",
-        "rank": 345,
+        "rank": 346,
         "shadow_meetings_total": 9
       },
       {
@@ -14287,7 +14295,7 @@
         "files_shadowed": 33,
         "files_with_related_meeting": 3,
         "mep_id": "198076",
-        "rank": 346,
+        "rank": 347,
         "shadow_meetings_total": 22
       },
       {
@@ -14295,7 +14303,7 @@
         "files_shadowed": 22,
         "files_with_related_meeting": 2,
         "mep_id": "187917",
-        "rank": 347,
+        "rank": 348,
         "shadow_meetings_total": 3
       },
       {
@@ -14303,7 +14311,7 @@
         "files_shadowed": 11,
         "files_with_related_meeting": 1,
         "mep_id": "197682",
-        "rank": 348,
+        "rank": 349,
         "shadow_meetings_total": 24
       },
       {
@@ -14311,7 +14319,7 @@
         "files_shadowed": 11,
         "files_with_related_meeting": 1,
         "mep_id": "197460",
-        "rank": 349,
+        "rank": 350,
         "shadow_meetings_total": 20
       },
       {
@@ -14319,14 +14327,6 @@
         "files_shadowed": 11,
         "files_with_related_meeting": 1,
         "mep_id": "197461",
-        "rank": 350,
-        "shadow_meetings_total": 1
-      },
-      {
-        "coverage_pct": 9.1,
-        "files_shadowed": 11,
-        "files_with_related_meeting": 1,
-        "mep_id": "24942",
         "rank": 351,
         "shadow_meetings_total": 1
       },
@@ -14334,7 +14334,7 @@
         "coverage_pct": 9.1,
         "files_shadowed": 11,
         "files_with_related_meeting": 1,
-        "mep_id": "256815",
+        "mep_id": "24942",
         "rank": 352,
         "shadow_meetings_total": 1
       },
@@ -14342,8 +14342,16 @@
         "coverage_pct": 9.1,
         "files_shadowed": 11,
         "files_with_related_meeting": 1,
-        "mep_id": "256855",
+        "mep_id": "256815",
         "rank": 353,
+        "shadow_meetings_total": 1
+      },
+      {
+        "coverage_pct": 9.1,
+        "files_shadowed": 11,
+        "files_with_related_meeting": 1,
+        "mep_id": "256855",
+        "rank": 354,
         "shadow_meetings_total": 1
       },
       {
@@ -14351,7 +14359,7 @@
         "files_shadowed": 23,
         "files_with_related_meeting": 2,
         "mep_id": "197772",
-        "rank": 354,
+        "rank": 355,
         "shadow_meetings_total": 6
       },
       {
@@ -14359,7 +14367,7 @@
         "files_shadowed": 12,
         "files_with_related_meeting": 1,
         "mep_id": "198176",
-        "rank": 355,
+        "rank": 356,
         "shadow_meetings_total": 3
       },
       {
@@ -14367,14 +14375,6 @@
         "files_shadowed": 12,
         "files_with_related_meeting": 1,
         "mep_id": "220871",
-        "rank": 356,
-        "shadow_meetings_total": 2
-      },
-      {
-        "coverage_pct": 8.3,
-        "files_shadowed": 12,
-        "files_with_related_meeting": 1,
-        "mep_id": "256845",
         "rank": 357,
         "shadow_meetings_total": 2
       },
@@ -14382,15 +14382,15 @@
         "coverage_pct": 8.3,
         "files_shadowed": 12,
         "files_with_related_meeting": 1,
-        "mep_id": "257124",
+        "mep_id": "256845",
         "rank": 358,
-        "shadow_meetings_total": 1
+        "shadow_meetings_total": 2
       },
       {
         "coverage_pct": 8.3,
         "files_shadowed": 12,
         "files_with_related_meeting": 1,
-        "mep_id": "257259",
+        "mep_id": "257124",
         "rank": 359,
         "shadow_meetings_total": 1
       },
@@ -14398,8 +14398,16 @@
         "coverage_pct": 8.3,
         "files_shadowed": 12,
         "files_with_related_meeting": 1,
-        "mep_id": "256844",
+        "mep_id": "257259",
         "rank": 360,
+        "shadow_meetings_total": 1
+      },
+      {
+        "coverage_pct": 8.3,
+        "files_shadowed": 12,
+        "files_with_related_meeting": 1,
+        "mep_id": "256844",
+        "rank": 361,
         "shadow_meetings_total": 0
       },
       {
@@ -14407,7 +14415,7 @@
         "files_shadowed": 26,
         "files_with_related_meeting": 2,
         "mep_id": "257050",
-        "rank": 361,
+        "rank": 362,
         "shadow_meetings_total": 3
       },
       {
@@ -14415,7 +14423,7 @@
         "files_shadowed": 13,
         "files_with_related_meeting": 1,
         "mep_id": "257073",
-        "rank": 362,
+        "rank": 363,
         "shadow_meetings_total": 6
       },
       {
@@ -14423,7 +14431,7 @@
         "files_shadowed": 13,
         "files_with_related_meeting": 1,
         "mep_id": "257438",
-        "rank": 363,
+        "rank": 364,
         "shadow_meetings_total": 5
       },
       {
@@ -14431,14 +14439,6 @@
         "files_shadowed": 13,
         "files_with_related_meeting": 1,
         "mep_id": "256852",
-        "rank": 364,
-        "shadow_meetings_total": 1
-      },
-      {
-        "coverage_pct": 7.7,
-        "files_shadowed": 13,
-        "files_with_related_meeting": 1,
-        "mep_id": "30482",
         "rank": 365,
         "shadow_meetings_total": 1
       },
@@ -14446,7 +14446,7 @@
         "coverage_pct": 7.7,
         "files_shadowed": 13,
         "files_with_related_meeting": 1,
-        "mep_id": "197810",
+        "mep_id": "30482",
         "rank": 366,
         "shadow_meetings_total": 1
       },
@@ -14454,8 +14454,16 @@
         "coverage_pct": 7.7,
         "files_shadowed": 13,
         "files_with_related_meeting": 1,
-        "mep_id": "256859",
+        "mep_id": "197810",
         "rank": 367,
+        "shadow_meetings_total": 1
+      },
+      {
+        "coverage_pct": 7.7,
+        "files_shadowed": 13,
+        "files_with_related_meeting": 1,
+        "mep_id": "256859",
+        "rank": 368,
         "shadow_meetings_total": 1
       },
       {
@@ -14463,7 +14471,7 @@
         "files_shadowed": 27,
         "files_with_related_meeting": 2,
         "mep_id": "197627",
-        "rank": 368,
+        "rank": 369,
         "shadow_meetings_total": 4
       },
       {
@@ -14471,7 +14479,7 @@
         "files_shadowed": 28,
         "files_with_related_meeting": 2,
         "mep_id": "2268",
-        "rank": 369,
+        "rank": 370,
         "shadow_meetings_total": 12
       },
       {
@@ -14479,7 +14487,7 @@
         "files_shadowed": 14,
         "files_with_related_meeting": 1,
         "mep_id": "197655",
-        "rank": 370,
+        "rank": 371,
         "shadow_meetings_total": 2
       },
       {
@@ -14487,7 +14495,7 @@
         "files_shadowed": 14,
         "files_with_related_meeting": 1,
         "mep_id": "198084",
-        "rank": 371,
+        "rank": 372,
         "shadow_meetings_total": 1
       },
       {
@@ -14495,7 +14503,7 @@
         "files_shadowed": 44,
         "files_with_related_meeting": 3,
         "mep_id": "127766",
-        "rank": 372,
+        "rank": 373,
         "shadow_meetings_total": 4
       },
       {
@@ -14503,14 +14511,6 @@
         "files_shadowed": 15,
         "files_with_related_meeting": 1,
         "mep_id": "197679",
-        "rank": 373,
-        "shadow_meetings_total": 3
-      },
-      {
-        "coverage_pct": 6.7,
-        "files_shadowed": 15,
-        "files_with_related_meeting": 1,
-        "mep_id": "192254",
         "rank": 374,
         "shadow_meetings_total": 3
       },
@@ -14518,8 +14518,16 @@
         "coverage_pct": 6.7,
         "files_shadowed": 15,
         "files_with_related_meeting": 1,
-        "mep_id": "257002",
+        "mep_id": "192254",
         "rank": 375,
+        "shadow_meetings_total": 3
+      },
+      {
+        "coverage_pct": 6.7,
+        "files_shadowed": 15,
+        "files_with_related_meeting": 1,
+        "mep_id": "257002",
+        "rank": 376,
         "shadow_meetings_total": 2
       },
       {
@@ -14527,7 +14535,7 @@
         "files_shadowed": 15,
         "files_with_related_meeting": 1,
         "mep_id": "256907",
-        "rank": 376,
+        "rank": 377,
         "shadow_meetings_total": 1
       },
       {
@@ -14535,7 +14543,7 @@
         "files_shadowed": 15,
         "files_with_related_meeting": 1,
         "mep_id": "124877",
-        "rank": 377,
+        "rank": 378,
         "shadow_meetings_total": 1
       },
       {
@@ -14543,7 +14551,7 @@
         "files_shadowed": 16,
         "files_with_related_meeting": 1,
         "mep_id": "257083",
-        "rank": 378,
+        "rank": 379,
         "shadow_meetings_total": 1
       },
       {
@@ -14551,16 +14559,8 @@
         "files_shadowed": 17,
         "files_with_related_meeting": 1,
         "mep_id": "96810",
-        "rank": 379,
-        "shadow_meetings_total": 4
-      },
-      {
-        "coverage_pct": 5.9,
-        "files_shadowed": 17,
-        "files_with_related_meeting": 1,
-        "mep_id": "28307",
         "rank": 380,
-        "shadow_meetings_total": 1
+        "shadow_meetings_total": 4
       },
       {
         "coverage_pct": 5.9,
@@ -16552,12 +16552,12 @@
   "weekly": {
     "feature_a": {
       "mep_id": "197800",
-      "source": "auto",
+      "source": "history",
       "week": "2026-W23"
     },
     "feature_b": {
       "mep_id": "197503",
-      "source": "auto",
+      "source": "history",
       "week": "2026-W23"
     },
     "watchlist": [
